@@ -11,18 +11,21 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+// import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from 'react-router-dom';
-import Eagle from "../assets/kartal_transparent.png"
+import Eagle from "../../assets/kartal_transparent.png"
 
-const pages = ['Dashboard', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'SignIn', 'Logout'];
 
 const Navbar = () => {
-    const navigate =useNavigate()
+    const navigate = useNavigate()
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+    // const currentUser = false
+    const currentUser = true
+    const pages = ['Dashboard', 'Blogs', 'Login'];
+    // const settings = currentUser ? ['About', 'Profile', 'NewBlog', 'Logout'] : ['About', 'Login', 'Register'];
+    const settings =  ['Profile','About', 'Account', 'Dashboard', 'Register','NewBlog','Login', 'Register', 'Logout'];
+    
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -42,7 +45,7 @@ const Navbar = () => {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <img src={Eagle} alt="Eagle" width={30} style={{marginRight:5}} />
+                    <img src={Eagle} alt="Eagle" width={30} sx={{ display: { xs: 'none', md: 'flex' }, marginRight: 5 }} />
                     {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
                     <Typography
                         variant="h6"
@@ -58,7 +61,7 @@ const Navbar = () => {
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
-                        onClick={()=> navigate('/')}
+                        // onClick={() => navigate('/')}
                     >
                         Eagle Blog
                     </Typography>
@@ -94,17 +97,18 @@ const Navbar = () => {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                    <Typography textAlign="center" onClick={() => navigate(`/${(page).toLocaleLowerCase()}`)}>{page}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
                     </Box>
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                    {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
                     <Typography
                         variant="h5"
                         noWrap
                         component="a"
-                        href=""
+                        // onClick={() => navigate('/')}
+                        href="/"
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -116,7 +120,7 @@ const Navbar = () => {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        Eagle Blog
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
@@ -137,7 +141,7 @@ const Navbar = () => {
                             </IconButton>
                         </Tooltip>
                         <Menu
-                            sx={{ mt: '45px', fontFamily: 'Noto Serif'}}
+                            sx={{ mt: '45px', fontFamily: 'Noto Serif' }}
                             id="menu-appbar"
                             anchorEl={anchorElUser}
                             anchorOrigin={{
@@ -154,7 +158,7 @@ const Navbar = () => {
                         >
                             {settings.map((setting) => (
                                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
+                                    <Typography onClick={() => navigate(`/${(setting).toLocaleLowerCase()}`)} textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
