@@ -22,10 +22,10 @@ const Navbar = () => {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     // const currentUser = false
     const currentUser = true
-    const pages = ['Dashboard', 'Blogs', 'Login'];
+    const pages = ['Dashboard', 'Blogs', "About"];
     // const settings = currentUser ? ['About', 'Profile', 'NewBlog', 'Logout'] : ['About', 'Login', 'Register'];
-    const settings =  ['Profile','About', 'Account', 'Dashboard', 'Register','NewBlog','Login', 'Register', 'Logout'];
-    
+    const settings = ['Profile', 'About', 'Account', 'Dashboard', 'NewBlog', 'Register', 'Login', 'Logout'];
+
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -42,8 +42,8 @@ const Navbar = () => {
     };
 
     return (
-        <AppBar position="static">
-            <Container maxWidth="xl">
+        <AppBar position="static" color='success'>
+            <Container maxWidth="xxl">
                 <Toolbar disableGutters>
                     <img src={Eagle} alt="Eagle" width={30} sx={{ display: { xs: 'none', md: 'flex' }, marginRight: 5 }} />
                     {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
@@ -61,7 +61,7 @@ const Navbar = () => {
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
-                        // onClick={() => navigate('/')}
+                    // onClick={() => navigate('/')}
                     >
                         Eagle Blog
                     </Typography>
@@ -97,7 +97,7 @@ const Navbar = () => {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center" onClick={() => navigate(`/${(page).toLocaleLowerCase()}`)}>{page}</Typography>
+                                    <Typography onClick={() => navigate(`/${(page).toLocaleLowerCase()}`)} textAlign="center">{page}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -126,8 +126,9 @@ const Navbar = () => {
                         {pages.map((page) => (
                             <Button
                                 key={page}
-                                onClick={handleCloseNavMenu}
+                                // onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
+                                onClick={() => navigate(`/${(page).toLocaleLowerCase()}`)}
                             >
                                 {page}
                             </Button>
