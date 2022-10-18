@@ -25,11 +25,22 @@ const userInitialValue = {
 //     "password1": password1
 // }
 const AuthContext = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState(userInitialValue)
+    const [currentUser, setCurrentUser] = useState("")
 
-    const createUser = async (userInfo) => {
+    const createUser = async (username, email, firstName, lastName, profile_pic, biography, password, password1) => {
         try {
-            const res = await axios.post(`${url}auth/register/`, userInfo)
+            const res = await axios.post(`http://127.0.0.1:8000/auth/register/`,
+                {
+                    "username": username,
+                    "email": email,
+                    "first_name": firstName,
+                    "last_name": lastName,
+                    "profile_pic": profile_pic,
+                    "biography": biography,
+                    "password": password,
+                    "password1": password1
+                }
+            )
             if (res.data.token) {
                 setCurrentUser(res.data)
 

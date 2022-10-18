@@ -1,15 +1,17 @@
 import { AccountCircle } from '@mui/icons-material'
 import AlternateEmailSharpIcon from '@mui/icons-material/AlternateEmailSharp';
 import KeySharpIcon from '@mui/icons-material/KeySharp';
+import LinkTwoToneIcon from '@mui/icons-material/LinkTwoTone';
+import BadgeTwoToneIcon from '@mui/icons-material/BadgeTwoTone';
+// import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
 import { Grid, Stack, TextField, InputAdornment, Button, Box } from '@mui/material'
-// import blogimg from '../assets/blockimage.jpg';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-// import { createUser } from '../helpers/authFunctions';
 import { useNavigate } from 'react-router-dom'
 import { AuthContextProv } from '../context/AuthContext';
 import { useContext } from 'react';
-// import Toastify from '../helpers/toastify';
+import Toastify from '../helper/helper';
+// import blogimg from '../assets/blockimage.jpg';
 
 const Register = () => {
     const navigate = useNavigate()
@@ -22,30 +24,32 @@ const Register = () => {
                     <h3>- Register -</h3>
                 </Box>
                 <Formik
-                    initialValues={{ username: '', firstName: '', lastName: '', email: '', password: '', password1: '' }}
+                    initialValues={{ username: '', firstName: '', lastName: '', email: '', biography: '', password: '', password1: '' }}
                     validationSchema={Yup.object().shape({
+                        username: Yup.string().max(25, 'You must enter a maximum of 25 characters').required('User Name information must be filled'),
                         firstName: Yup.string().max(25, 'You must enter a maximum of 25 characters').required('First Name information must be filled'),
                         lastName: Yup.string().max(25, 'You must enter a maximum of 25 characters').required('Last Name information must be filled'),
                         email: Yup.string().email('Please enter a valid e-mail address').required('e-mail information must be filled').matches(/([\w._%+-]+@[\w.-]+\.[a-zA-Z]{0,4})/, 'Such as : asdf@dfgv.com'),
+                        // profile_pic: Yup.string().url('Please enter a valid url address').required('profile picture information must be filled').matches(/([\w._%+-]+@[\w.-]+\.[a-zA-Z]{0,4})/),
                         password: Yup.string().min(8).max(16).required('Password information must be filled').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character")
                     })
                     }
                     onSubmit={(values, action) => {
-                        const userInfo = {
-                            "username": values.username,
-                            "email": values.email,
-                            "first_name": values.firstName,
-                            "last_name": values.lastName,
-                            "profile_pic": profile_pic,
-                            "biography": biography,
-                            "password": values.password,
-                            "password1": values.password1
-                        }
-                        createUser(values.username, values.firstName, values.lastName, values.email, values.password, navigate);
-
+                        // const userInfo = {
+                        //     "username": values.username,
+                        //     "email": values.email,
+                        //     "first_name": values.firstName,
+                        //     "last_name": values.lastName,
+                        //     "profile_pic": values.profile_pic,
+                        //     "biography": values.biography,
+                        //     "password": values.password,
+                        //     "password1": values.password1
+                        // }
+                        createUser(values.username, values.email, values.firstName, values.lastName, values.profile_pic, values.biography, values.password, values.password1);
                         action.resetForm();
                         action.setSubmitting(false);
-                        // Toastify('Registered successfully')
+                        navigate('/login')
+                        Toastify('Registered successfully')
                     }}
                 >
                     {({ values, handleChange, errors, touched, handleBlur }) => (
@@ -61,12 +65,12 @@ const Register = () => {
                                     onChange={handleChange}
                                     placeholder='User Name'
                                     onBlur={handleBlur}
-                                    helperText={touched.firstName && errors.firstName}
-                                    error={touched.firstName && Boolean(errors.firstName)}
+                                    helperText={touched.username && errors.username}
+                                    error={touched.username && Boolean(errors.username)}
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position='start' >
-                                                <AccountCircle />
+                                                <BadgeTwoToneIcon />
                                             </InputAdornment>
                                         ),
                                     }}
@@ -77,9 +81,9 @@ const Register = () => {
                                     id='firstName'
                                     type='text'
                                     name='firstName'
+                                    placeholder='First Name'
                                     value={values.firstName}
                                     onChange={handleChange}
-                                    placeholder='First Name'
                                     onBlur={handleBlur}
                                     helperText={touched.firstName && errors.firstName}
                                     error={touched.firstName && Boolean(errors.firstName)}
@@ -93,12 +97,13 @@ const Register = () => {
                                 />
                                 <TextField
                                     label='Last Name'
-                                    type='text'
                                     variant='outlined'
-                                    value={values.lastName}
+                                    id='lastName'
+                                    type='text'
                                     name='lastName'
-                                    onChange={handleChange}
                                     placeholder='Last Name'
+                                    value={values.lastName}
+                                    onChange={handleChange}
                                     onBlur={handleBlur}
                                     helperText={touched.lastName && errors.lastName}
                                     error={touched.lastName && Boolean(errors.lastName)}
@@ -111,13 +116,34 @@ const Register = () => {
                                     }}
                                 />
                                 <TextField
-                                    label='E-mail'
-                                    type='email'
+                                    label='Profile Picture'
                                     variant='outlined'
-                                    value={values.email}
-                                    name='email'
+                                    id='profile_pic'
+                                    type='url'
+                                    name='profile_pic'
+                                    placeholder='Profile Picture'
+                                    value={values.profile_pic}
                                     onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    // helperText={touched.profile_pic && errors.profile_pic}
+                                    // error={touched.profile_pic && Boolean(errors.profile_pic)}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position='start' >
+                                                <LinkTwoToneIcon />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                <TextField
+                                    label='E-mail'
+                                    variant='outlined'
+                                    id='email'
+                                    type='email'
+                                    name='email'
                                     placeholder='e-mail'
+                                    value={values.email}
+                                    onChange={handleChange}
                                     onBlur={handleBlur}
                                     helperText={touched.email && errors.email}
                                     error={touched.email && Boolean(errors.email)}
@@ -125,6 +151,28 @@ const Register = () => {
                                         startAdornment: (
                                             <InputAdornment position='start' >
                                                 <AlternateEmailSharpIcon />
+                                            </InputAdornment>
+                                        )
+                                    }}
+                                />
+                                <TextField
+                                    label='Biography'
+                                    name='biography'
+                                    value={values.biography}
+                                    multiline
+                                    rows={12}
+                                    maxRows={18}
+                                    onChange={handleChange}
+                                    variant='outlined'
+                                    id='biography'
+                                    placeholder='Biography'
+                                    onBlur={handleBlur}
+                                    helperText={touched.biography && errors.biography}
+                                    error={touched.email && Boolean(errors.biography)}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position='start' >
+                                                {/* <SettingsAccessibilityIcon /> */}
                                             </InputAdornment>
                                         )
                                     }}
