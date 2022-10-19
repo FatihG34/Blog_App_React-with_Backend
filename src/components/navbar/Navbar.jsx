@@ -135,10 +135,25 @@ const Navbar = () => {
                         ))}
                     </Box>
 
+                    {currentUser &&
+                        <Typography variant="h5" component="h2" sx={{
+                            mr: 2,
+                            display: { xs: 'none', md: 'flex' },
+                            fontFamily: 'Noto Serif',
+                            fontWeight: 700
+                        }}>
+                            {currentUser.first_name} {currentUser.last_name}
+                        </Typography>
+                    }
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
+                        <Tooltip title="Open Menu">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                {currentUser
+                                    ?
+                                    <Avatar alt={currentUser.username} src={currentUser.profile_pic} />
+                                    :
+                                    <Avatar alt="Anonymous User" src="/static/images/avatar/2.jpg" />
+                                }
                             </IconButton>
                         </Tooltip>
                         <Menu
