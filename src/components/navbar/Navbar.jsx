@@ -22,9 +22,8 @@ const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const { currentUser, logout } = React.useContext(AuthContextProv)
-    const pages = ['Dashboard', 'Blogs', "About"];
-    const settings = currentUser ? ['About', 'Profile', 'NewBlog', 'Logout'] : ['About', 'Login', 'Register'];
-    // const settings = ['Profile', 'About', 'Account', 'Dashboard', 'NewBlog', 'Register', 'Login', 'Logout'];
+    const pages = ['New Blog', "About"];
+    const settings = currentUser ? ['Profile', 'NewBlog', 'Logout'] : ['Login', 'Register'];
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -33,8 +32,14 @@ const Navbar = () => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseNavMenu = () => {
+    const handleCloseNavMenu = (e) => {
         setAnchorElNav(null);
+        if (e.target.innerText === "New Blog") {
+            navigate(`/newblog`)
+        }
+        else if (e.target.innerText === "About") {
+            navigate(`/about`)
+        }
     };
 
     const handleCloseUserMenu = () => {
@@ -50,8 +55,7 @@ const Navbar = () => {
                     <Typography
                         variant="h6"
                         noWrap
-                        component="a"
-                        href="/"
+                        onClick={() => navigate('/')}
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -60,6 +64,7 @@ const Navbar = () => {
                             letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
+                            cursor: 'pointer'
                         }}
                     // onClick={() => navigate('/')}
                     >
@@ -97,7 +102,7 @@ const Navbar = () => {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography onClick={() => navigate(`/${(page).toLocaleLowerCase()}`)} textAlign="center">{page}</Typography>
+                                    <Typography textAlign="center">{page}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -106,9 +111,7 @@ const Navbar = () => {
                     <Typography
                         variant="h5"
                         noWrap
-                        component="a"
-                        // onClick={() => navigate('/')}
-                        href="/"
+                        onClick={() => navigate('/')}
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -117,22 +120,23 @@ const Navbar = () => {
                             fontWeight: 700,
                             letterSpacing: '.3rem',
                             color: 'inherit',
-                            textDecoration: 'none',
+                            cursor: 'pointer'
                         }}
                     >
                         Eagle Blog
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
-                            <Button
-                                key={page}
-                                // onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                                onClick={() => navigate(`/${(page).toLocaleLowerCase()}`)}
-                            >
-                                {page}
-                            </Button>
-                        ))}
+                        <Button
+                            onClick={() => navigate("/newblog")}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            New Blog
+                        </Button><Button
+                            onClick={() => navigate("/about")}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            About
+                        </Button>
                     </Box>
 
                     {currentUser &&
@@ -146,7 +150,7 @@ const Navbar = () => {
                         </Typography>
                     }
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open Menu">
+                        <Tooltip title={currentUser ? currentUser.username : "Authentication"}>
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 {currentUser
                                     ?
