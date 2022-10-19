@@ -6,7 +6,7 @@ const url = 'http://127.0.0.1:8000/';
 export const AuthContextProv = createContext();
 
 const AuthContext = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState("")
+    const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem("currentUser")) || false)
     const token = sessionStorage.getItem('token')
     const [myToken, setMyToken] = useState(token && window.atob(token))
 
@@ -16,8 +16,9 @@ const AuthContext = ({ children }) => {
             const res = await axios.post(`${url}auth/register/`, userInfo)
             if (res.data.token) {
                 setMyToken(res.data.token)
+                const userData = { ...res.data, token: '' }
                 setCurrentUser({ ...res.data, token: '' })
-                sessionStorage.setItem("currentUser", currentUser)
+                sessionStorage.setItem("currentUser", JSON.stringify(userData))
                 const token = window.btoa(res.data.token)
                 sessionStorage.setItem('token', token)
                 toastSuccessNotify('Registered successfully')
