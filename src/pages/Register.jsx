@@ -10,8 +10,8 @@ import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom'
 import { AuthContextProv } from '../context/AuthContext';
 import { useContext } from 'react';
-import Toastify from '../helper/helper';
-// import blogimg from '../assets/blockimage.jpg';
+// import { toastSuccessNotify } from '../helper/helper';
+import Eagle from '../assets/kartal_transparent.png';
 
 const Register = () => {
     const navigate = useNavigate()
@@ -20,7 +20,7 @@ const Register = () => {
         <div className='register' style={{ margin: "2rem 5rem" }}>
             <Grid style={{ width: '25rem', backgroundColor: 'whitesmoke', padding: '2rem', borderRadius: '0.75rem', boxShadow: '18px 18px 25px black' }} >
                 <Box style={{ textAlign: 'center', mb: 2 }}>
-                    {/* <img className='blogimg' src={blogimg} alt="blogimage" /> */}
+                    <img className='blogimg' src={Eagle} alt="Eagle" />
                     <h3>- Register -</h3>
                 </Box>
                 <Formik
@@ -30,26 +30,25 @@ const Register = () => {
                         firstName: Yup.string().max(25, 'You must enter a maximum of 25 characters').required('First Name information must be filled'),
                         lastName: Yup.string().max(25, 'You must enter a maximum of 25 characters').required('Last Name information must be filled'),
                         email: Yup.string().email('Please enter a valid e-mail address').required('e-mail information must be filled').matches(/([\w._%+-]+@[\w.-]+\.[a-zA-Z]{0,4})/, 'Such as : asdf@dfgv.com'),
-                        // profile_pic: Yup.string().url('Please enter a valid url address').required('profile picture information must be filled').matches(/([\w._%+-]+@[\w.-]+\.[a-zA-Z]{0,4})/),
+                        profile_pic: Yup.string().url('Please enter a valid url address').required('profile picture information must be filled'),
                         password: Yup.string().min(8).max(16).required('Password information must be filled').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character")
                     })
                     }
                     onSubmit={(values, action) => {
-                        // const userInfo = {
-                        //     "username": values.username,
-                        //     "email": values.email,
-                        //     "first_name": values.firstName,
-                        //     "last_name": values.lastName,
-                        //     "profile_pic": values.profile_pic,
-                        //     "biography": values.biography,
-                        //     "password": values.password,
-                        //     "password1": values.password1
-                        // }
-                        createUser(values.username, values.email, values.firstName, values.lastName, values.profile_pic, values.biography, values.password, values.password1);
+                        const userInfo = {
+                            "username": values.username,
+                            "email": values.email,
+                            "first_name": values.firstName,
+                            "last_name": values.lastName,
+                            "profile_pic": values.profile_pic,
+                            "biography": values.biography,
+                            "password": values.password,
+                            "password1": values.password1
+                        }
+                        // createUser(values.username, values.email, values.firstName, values.lastName, values.profile_pic, values.biography, values.password, values.password1);
+                        createUser(userInfo, navigate);
                         action.resetForm();
                         action.setSubmitting(false);
-                        navigate('/login')
-                        Toastify('Registered successfully')
                     }}
                 >
                     {({ values, handleChange, errors, touched, handleBlur }) => (
@@ -125,8 +124,8 @@ const Register = () => {
                                     value={values.profile_pic}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    // helperText={touched.profile_pic && errors.profile_pic}
-                                    // error={touched.profile_pic && Boolean(errors.profile_pic)}
+                                    helperText={touched.profile_pic && errors.profile_pic}
+                                    error={touched.profile_pic && Boolean(errors.profile_pic)}
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position='start' >

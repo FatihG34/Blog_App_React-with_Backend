@@ -14,14 +14,14 @@ import MenuItem from '@mui/material/MenuItem';
 // import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from 'react-router-dom';
 import Eagle from "../../assets/kartal_transparent.png"
+import { AuthContextProv } from '../../context/AuthContext';
 
 
 const Navbar = () => {
     const navigate = useNavigate()
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-    // const currentUser = false
-    const currentUser = true
+    const { currentUser, logout } = React.useContext(AuthContextProv)
     const pages = ['Dashboard', 'Blogs', "About"];
     // const settings = currentUser ? ['About', 'Profile', 'NewBlog', 'Logout'] : ['About', 'Login', 'Register'];
     const settings = ['Profile', 'About', 'Account', 'Dashboard', 'NewBlog', 'Register', 'Login', 'Logout'];
@@ -159,7 +159,13 @@ const Navbar = () => {
                         >
                             {settings.map((setting) => (
                                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography onClick={() => navigate(`/${(setting).toLocaleLowerCase()}`)} textAlign="center">{setting}</Typography>
+                                    {
+                                        setting === "Logout"
+                                            ?
+                                            <Typography onClick={() => logout(navigate)} textAlign="center">{setting}</Typography>
+                                            :
+                                            <Typography onClick={() => navigate(`/${(setting).toLocaleLowerCase()}`)} textAlign="center">{setting}</Typography>
+                                    }
                                 </MenuItem>
                             ))}
                         </Menu>

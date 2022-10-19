@@ -1,59 +1,80 @@
 import axios from 'axios';
 import React, { createContext, useState } from 'react'
+import { toastErrorNotify, toastSuccessNotify } from '../helper/helper';
 const url = 'http://127.0.0.1:8000/';
 
 export const AuthContextProv = createContext();
-const userInitialValue = {
-    "username": "",
-    "email": "",
-    "first_name": "",
-    "last_name": "",
-    "profile_pic": "",
-    "biography": "",
-    "password": "",
-    "password1": "",
-    "key": ""
-}
-// const userInfo = {
-//     "username": username,
-//     "email": email,
-//     "first_name": first_name,
-//     "last_name": last_name,
-//     "profile_pic": profile_pic,
-//     "biography": biography,
-//     "password": password,
-//     "password1": password1
-// }
+
 const AuthContext = ({ children }) => {
     const [currentUser, setCurrentUser] = useState("")
+    const token = sessionStorage.getItem('token')
+    const [myToken, setMyToken] = useState(token && window.atob(token))
 
-    const createUser = async (username, email, firstName, lastName, profile_pic, biography, password, password1) => {
+    // const createUser = async (username, email, firstName, lastName, profile_pic, biography, password, password1) => {
+    const createUser = async (userInfo, navigate) => {
         try {
-            const res = await axios.post(`http://127.0.0.1:8000/auth/register/`,
-                {
-                    "username": username,
-                    "email": email,
-                    "first_name": firstName,
-                    "last_name": lastName,
-                    "profile_pic": profile_pic,
-                    "biography": biography,
-                    "password": password,
-                    "password1": password1
-                }
-            )
+            const res = await axios.post(`${url}auth/register/`, userInfo)
             if (res.data.token) {
-                setCurrentUser(res.data)
-
-                sessionStorage.setItem("currentUser", res.data)
+                setMyToken(res.data.token)
+                setCurrentUser({ ...res.data, token: '' })
+                sessionStorage.setItem("currentUser", currentUser)
+                const token = window.btoa(res.data.token)
+                sessionStorage.setItem('token', token)
+                toastSuccessNotify('Registered successfully')
+                navigate('/')
             }
         } catch (error) {
-            console.log(error);
+            toastErrorNotify(error.message);
         }
-
     }
+
+    const signIn = async (userLoginInfo, navigate) => {
+        try {
+            const res = await axios.post(`${url}auth/login/`, userLoginInfo)
+            if (res.data.key) {
+                setMyToken(res.data.key)
+                setCurrentUser(res.data.user)
+                sessionStorage.setItem('currentUser', res.data.user)
+                const token = window.btoa(res.data.key)
+                sessionStorage.setItem('token', token)
+                toastSuccessNotify('Logined successfully')
+                navigate('/')
+            }
+
+        } catch (error) {
+            toastErrorNotify(error.message);
+        }
+    }
+
+    const logout = async (navigate) => {
+        try {
+            const headers = {
+                'Authorization': `Token ${myToken}`,
+            }
+            const res = await axios.post(`${url}auth/logout/`, headers)
+            if (res.status === 200) {
+                setCurrentUser(false)
+                setMyToken("")
+                sessionStorage.clear()
+                toastSuccessNotify('User log out successfully.')
+                navigate("/")
+            }
+
+
+        } catch (error) {
+            toastErrorNotify(error.message);
+        }
+    }
+
+
+
+
+
     const value = {
         createUser,
-        currentUser
+        signIn,
+        currentUser,
+        logout
     }
     return (
         <AuthContextProv.Provider value={value}>
