@@ -48,10 +48,14 @@ const AuthContext = ({ children }) => {
 
     const logout = async (navigate) => {
         try {
-            const headers = {
-                'Authorization': `Token ${myToken}`,
-            }
-            const res = await axios.post(`${url}auth/logout/`, headers)
+            const config = {
+                method: 'post',
+                url: `${url}auth/logout/`,
+                headers: {
+                    'Authorization': `Token ${myToken}`,
+                }
+            };
+            const res = await axios(config)
             if (res.status === 200) {
                 setCurrentUser(false)
                 setMyToken("")
