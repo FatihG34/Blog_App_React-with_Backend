@@ -23,8 +23,8 @@ const Navbar = () => {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const { currentUser, logout } = React.useContext(AuthContextProv)
     const pages = ['Dashboard', 'Blogs', "About"];
-    // const settings = currentUser ? ['About', 'Profile', 'NewBlog', 'Logout'] : ['About', 'Login', 'Register'];
-    const settings = ['Profile', 'About', 'Account', 'Dashboard', 'NewBlog', 'Register', 'Login', 'Logout'];
+    const settings = currentUser ? ['About', 'Profile', 'NewBlog', 'Logout'] : ['About', 'Login', 'Register'];
+    // const settings = ['Profile', 'About', 'Account', 'Dashboard', 'NewBlog', 'Register', 'Login', 'Logout'];
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);

@@ -45,6 +45,25 @@ const AuthContext = ({ children }) => {
             toastErrorNotify(error.message);
         }
     }
+    const updateUser = async (updateInfo, id, navigate) => {
+        // updateInfo = {
+        //     "username": "string",
+        //     "email": "user@example.com",
+        //     "first_name": "string",
+        //     "last_name": "string",
+        //     "profile_pic": "string",
+        //     "biography": "string"
+        // }
+        try {
+            const res = await axios.patch(`${url}auth/update-profile/${id}`, updateInfo)
+            setCurrentUser(res.data)
+            sessionStorage.setItem("currentUser", currentUser)
+            toastSuccessNotify('Profile Updated successfully')
+            navigate('/')
+        } catch (error) {
+            toastErrorNotify(error.message);
+        }
+    }
 
     const logout = async (navigate) => {
         try {
@@ -78,7 +97,8 @@ const AuthContext = ({ children }) => {
         createUser,
         signIn,
         currentUser,
-        logout
+        logout,
+        updateUser
     }
     return (
         <AuthContextProv.Provider value={value}>
