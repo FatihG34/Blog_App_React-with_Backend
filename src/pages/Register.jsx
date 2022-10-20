@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContextProv } from '../context/AuthContext';
 import { useContext } from 'react';
 // import { toastSuccessNotify } from '../helper/helper';
-import Eagle from '../assets/kartal_transparent.png';
+// import Eagle from '../assets/kartal_transparent.png';
 
 const Register = () => {
     const navigate = useNavigate()
