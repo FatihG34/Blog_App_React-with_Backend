@@ -2,8 +2,7 @@ import React from 'react';
 import TextField from '@mui/material/TextField';
 import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, Stack } from '@mui/material';
 
-const BlogForm = ({ handleChange, handleSubmit, blogData }) => {
-    console.log('blogForm da ki blogData:', blogData);
+const BlogForm = ({ handleChange, handleSubmit, posts }) => {
     return (
         <form
             onSubmit={handleSubmit}
@@ -13,7 +12,7 @@ const BlogForm = ({ handleChange, handleSubmit, blogData }) => {
                     label='Title'
                     type='text'
                     name='title'
-                    value={null}
+                    value={posts.title}
                     id="outlined-size-normal"
                     required
                     onChange={(e) => handleChange(e)}
@@ -23,7 +22,7 @@ const BlogForm = ({ handleChange, handleSubmit, blogData }) => {
                     <Select
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
-                        value={null}
+                        value={posts.category}
                         label="Age"
                         onChange={handleChange}
                     >
@@ -34,13 +33,13 @@ const BlogForm = ({ handleChange, handleSubmit, blogData }) => {
                         <MenuItem value={20}>Twenty</MenuItem>
                         <MenuItem value={30}>Thirty</MenuItem>
                     </Select>
-                    <FormHelperText>With label + helper text</FormHelperText>
+                    {/* <FormHelperText>With label + helper text</FormHelperText> */}
                 </FormControl>
                 <TextField
                     label='Image URL'
                     type='url'
                     name='imageUrl'
-                    value={null}
+                    value={posts.image}
                     id="outlined-size-normal"
                     onChange={handleChange}
                     // onChange={handleChange} same with above
@@ -49,7 +48,7 @@ const BlogForm = ({ handleChange, handleSubmit, blogData }) => {
                 <TextField
                     label='Content'
                     name='content'
-                    value={null}
+                    value={posts.content}
                     multiline
                     rows={12}
                     maxRows={18}

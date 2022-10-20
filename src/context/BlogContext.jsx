@@ -1,9 +1,9 @@
 import axios from 'axios'
-import React, { createContext } from 'react'
+import React, { createContext, useState } from 'react'
 import { toastErrorNotify, toastSuccessNotify } from '../helper/helper';
 
 
-export const BlogData = createContext()
+export const BlogDataContext = createContext()
 const initialValue = {
     title: "",
     category: "",
@@ -14,7 +14,8 @@ const initialValue = {
 const url = "http://127.0.0.1:8000/"
 
 const BlogContext = ({ children }) => {
-    const [posts, setPosts] = useState(JSON.parse(sessionStorage.getItem("posts")) || initialValue)
+    // const [posts, setPosts] = useState(JSON.parse(sessionStorage.getItem("posts")) || initialValue)
+    const [posts, setPosts] = useState(initialValue)
     const [category, setCategory] = useState(JSON.parse(sessionStorage.getItem("categories")) || "")
 
     const getCategories = async () => {
@@ -52,15 +53,16 @@ const BlogContext = ({ children }) => {
 
     const value = {
         posts,
+        setPosts,
         getCategories,
         getBlogPosts,
         createPost,
 
     }
     return (
-        <BlogData.Provider value={value}>
+        <BlogDataContext.Provider value={value}>
             {children}
-        </BlogData.Provider>
+        </BlogDataContext.Provider>
     )
 }
 
