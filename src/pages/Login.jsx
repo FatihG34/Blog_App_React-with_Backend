@@ -14,8 +14,10 @@ const Login = () => {
     const navigate = useNavigate()
     const { signIn } = useContext(AuthContextProv)
     return (
-        <div style={{ margin: "2rem 5rem" }}>
-            <Grid style={{ width: '25rem', backgroundColor: 'whitesmoke', padding: '2rem', borderRadius: '0.75rem', boxShadow: '18px 18px 25px black' }} >
+        <Grid container width={'100%'} height={'100vh'}>
+            <Grid item xs={0} md={8} style={{ background: "url('https://picsum.photos/800/1200') no-repeat center", backgroundSize: "100%" }}>
+            </Grid>
+            <Grid item xs={12} md={4} sx={{ backgroundColor: 'whitesmoke', padding: '2rem' }}>
                 <Box style={{ textAlign: 'center', mb: 2 }}>
                     <img className='blogimg' src={Eagle} alt="Eagle" />
                     <h3>- Login -</h3>
@@ -109,7 +111,7 @@ const Login = () => {
                     )}
                 </Formik>
             </Grid>
-        </div>
+        </Grid>
 
     )
 }
