@@ -10,18 +10,21 @@ import Typography from '@mui/material/Typography';
 import { green } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
 import { useNavigate } from 'react-router';
+
 
 
 export default function BlogCard({ data }) {
     const navigate = useNavigate();
+    console.log(data);
     return (
-        <Card sx={{ maxWidth: 345 }}>
-            <div onClick={() => navigate('/details', { state: { data } })} style={{ cursor: 'pointer' }}>
+        <Card sx={{ maxWidth: 345, width: 350, height: 470, position: "relative" }}>
+            <div onClick={() => navigate(`/details/${data.slug}`, { state: { data } })} style={{ cursor: 'pointer' }}>
                 <CardMedia
                     component="img"
                     height="200"
-                    image={data.imageUrl}
+                    image={data.image}
                     alt={data.title}
                 />
                 <CardContent sx={{ bgcolor: '#81abc2', height: 120 }}>
@@ -33,7 +36,7 @@ export default function BlogCard({ data }) {
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
                             display: '-webkit-box',
-                            WebkitLineClamp: '3',
+                            WebkitLineClamp: '4',
                             WebkitBoxOrient: 'vertical',
                         }}
                     >
@@ -44,18 +47,31 @@ export default function BlogCard({ data }) {
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: green[500] }} aria-label="blog">
-                        {(data.bloger.blogerName).slice(0, 1)}
+                        {((data.author).slice(0, 1)).toUpperCase()}
                     </Avatar>
                 }
-                title={data.bloger.blogerEmail}
-                subheader={data.blogCreateTime}
+                title={data.author.toUpperCase()}
+                subheader={(new Date(data.published_date).toUTCString()).slice(0, 16)}
+            // subheader={data.published_date}
             />
-            <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
+            <CardActions disableSpacing sx={{ position: "absolute", bottom: "5px", left: "5px" }}>
+                <IconButton aria-label="like">
                     <FavoriteIcon />
+                    <Typography sx={{ ml: 1 }}>
+                        {data.like_count}
+                    </Typography>
                 </IconButton>
-                <IconButton aria-label="share">
+                <IconButton aria-label="view">
+                    <VisibilityTwoToneIcon />
+                    <Typography sx={{ ml: 1 }}>
+                        {data.post_view_count}
+                    </Typography>
+                </IconButton>
+                <IconButton aria-label="comment">
                     <ChatBubbleOutlineOutlinedIcon />
+                    <Typography sx={{ ml: 1 }}>
+                        {data.comment_count}
+                    </Typography>
                 </IconButton>
             </CardActions>
         </Card>
