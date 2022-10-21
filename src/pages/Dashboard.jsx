@@ -1,22 +1,30 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 // import { useFetch } from '../helpers/databaseFunctions'; burda gerekli data db den çekiliyor
 import BlogCard from '../components/blogcard/BlogCard';
 import Loading from '../assets/loading.gif'
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { BlogDataContext } from '../context/BlogContext';
 
 const Dashboard = () => {
     const { posts, getBlogPosts } = useContext(BlogDataContext)
+    const [isLoading, setIsLoading] = useState(true)
     // const isLoading = false
     // const dataList = ["React"]
-    // if (isLoading) {
-    //     return <img src={Loading} alt="Loading..." />
-    // }
-    console.log(posts);
-
     useEffect(() => {
         getBlogPosts()
+        setIsLoading(false)
     }, [])
+
+
+    if (isLoading) {
+        return (
+            <div style={{ backgroundColor: 'black', height: '93.35vh', display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
+                <img src={Loading} alt="Loading..." width={'800'} />
+            </div>
+        )
+    }
+    // console.log(posts);
+
 
 
     return (

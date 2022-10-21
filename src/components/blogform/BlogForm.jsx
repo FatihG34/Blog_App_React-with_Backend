@@ -54,6 +54,23 @@ const BlogForm = ({ handleChange, handleSubmit, posts }) => {
                     maxRows={18}
                     onChange={handleChange}
                 />
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="demo-simple-select-helper-label">Status</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-helper-label"
+                        id="demo-simple-select-helper"
+                        value={posts.status}
+                        label="Status"
+                        required
+                        onChange={handleChange}
+                    >
+                        <MenuItem value="">
+                            <em>Status</em>
+                        </MenuItem>
+                        <MenuItem value={"d"}>Draft</MenuItem>
+                        <MenuItem value={"p"}>Published</MenuItem>
+                    </Select>
+                </FormControl>
                 <Button
                     variant='contained'
                     type='submit'

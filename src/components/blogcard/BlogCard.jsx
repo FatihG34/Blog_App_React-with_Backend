@@ -12,12 +12,25 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
 import { useNavigate } from 'react-router';
+import { BlogDataContext } from '../../context/BlogContext';
+import { AuthContextProv } from '../../context/AuthContext';
 
 
 
 export default function BlogCard({ data }) {
     const navigate = useNavigate();
-    console.log(data);
+    const { postLike } = React.useContext(BlogDataContext)
+    const { currentUser } = React.useContext(AuthContextProv)
+    // console.log(data);
+    const handleLike = (user_id) => {
+        const like = {
+            "user": user_id,
+            // "post": blogPost_id
+        }
+        console.log(like);
+        postLike(like)
+    }
+    // console.log(currentUser.id);
     return (
         <Card sx={{ maxWidth: 345, width: 350, height: 470, position: "relative" }}>
             <div onClick={() => navigate(`/details/${data.slug}`, { state: { data } })} style={{ cursor: 'pointer' }}>
@@ -55,7 +68,7 @@ export default function BlogCard({ data }) {
             // subheader={data.published_date}
             />
             <CardActions disableSpacing sx={{ position: "absolute", bottom: "5px", left: "5px" }}>
-                <IconButton aria-label="like">
+                <IconButton aria-label="like" onClick={() => handleLike(currentUser.id)}>
                     <FavoriteIcon />
                     <Typography sx={{ ml: 1 }}>
                         {data.like_count}
