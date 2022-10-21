@@ -35,7 +35,7 @@ const AuthContext = ({ children }) => {
             if (res.data.key) {
                 setMyToken(res.data.key)
                 setCurrentUser(res.data.user)
-                sessionStorage.setItem('currentUser', res.data.user)
+                sessionStorage.setItem('currentUser', JSON.stringify(res.data.user))
                 const token = window.btoa(res.data.key)
                 sessionStorage.setItem('token', token)
                 toastSuccessNotify('Logined successfully')
@@ -58,7 +58,7 @@ const AuthContext = ({ children }) => {
         try {
             const res = await axios.patch(`${url}auth/update-profile/${id}`, updateInfo)
             setCurrentUser(res.data)
-            sessionStorage.setItem("currentUser", currentUser)
+            sessionStorage.setItem("currentUser", JSON.stringify(res.data))
             toastSuccessNotify('Profile Updated successfully')
             navigate('/')
         } catch (error) {
