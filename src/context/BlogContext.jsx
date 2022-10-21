@@ -4,18 +4,12 @@ import { toastErrorNotify, toastSuccessNotify } from '../helper/helper';
 
 
 export const BlogDataContext = createContext()
-const initialValue = {
-    title: "",
-    category: "",
-    content: "",
-    image: "",
-    status: ""
-}
+
 const url = "http://127.0.0.1:8000/"
 
 const BlogContext = ({ children }) => {
     // const [posts, setPosts] = useState(JSON.parse(sessionStorage.getItem("posts")) || initialValue)
-    const [posts, setPosts] = useState(initialValue)
+    const [posts, setPosts] = useState(JSON.parse(sessionStorage.getItem("posts")) || [])
     const [category, setCategory] = useState(JSON.parse(sessionStorage.getItem("categories")) || "")
 
     const getCategories = async () => {
@@ -32,8 +26,9 @@ const BlogContext = ({ children }) => {
     const getBlogPosts = async () => {
         try {
             const res = await axios.get(`${url}blog/posts/`)
-            setPosts(res.data)
-            sessionStorage.setItem("posts", JSON.stringify(res.data))
+            setPosts(res.data.results)
+            sessionStorage.setItem("posts", JSON.stringify(res.data.results))
+            console.log(res.data.results);
         } catch (error) {
             toastErrorNotify(error.message);
         }
