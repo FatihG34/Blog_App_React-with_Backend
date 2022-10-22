@@ -1,6 +1,7 @@
 import axios from 'axios'
-import React, { createContext, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import { toastErrorNotify, toastSuccessNotify } from '../helper/helper';
+import { AuthContextProv } from './AuthContext';
 
 
 export const BlogDataContext = createContext()
@@ -8,9 +9,13 @@ export const BlogDataContext = createContext()
 const url = "http://127.0.0.1:8000/"
 
 const BlogContext = ({ children }) => {
-    // const [posts, setPosts] = useState(JSON.parse(sessionStorage.getItem("posts")) || initialValue)
-    const [posts, setPosts] = useState(JSON.parse(sessionStorage.getItem("posts")) || [])
-    const [category, setCategory] = useState(JSON.parse(sessionStorage.getItem("categories")) || "")
+    const [blogPosts, setBlogposts] = useState([])  //* for home  page
+    const [blogDetail, setBlogDetail] = useState([]) //* for blogDetail page
+    const [category, setCategory] = useState("")
+    const [deatilLoading, setDeatilLoading] = useState(true) //* for blogDetail page
+
+
+    // const { currentUser } = useContext(AuthContextProv)
 
     const getCategories = async () => {
         try {
@@ -26,11 +31,33 @@ const BlogContext = ({ children }) => {
     const getBlogPosts = async () => {
         try {
             const res = await axios.get(`${url}blog/posts/`)
-            setPosts(res.data.results)
-            sessionStorage.setItem("posts", JSON.stringify(res.data.results))
-            // console.log(res.data.results);
+            setBlogposts(res.data.results)
+            return res;
         } catch (error) {
             toastErrorNotify(error.message);
+        }
+    }
+
+
+    const getOneBlogPost = async (slug) => {
+        const token = window.atob(sessionStorage.getItem('token'))
+        try {
+            const config = {
+                method: 'get',
+                url: `${url}blog/posts/react-javascript-library-68d058ce5c`,
+                // url: `${url}blog/posts/${slug}`,
+                headers: {
+                    'Authorization': `Token ${token}`,
+                }
+            };
+            console.log('Bu işlem ile view sayısı bir artmış mı oldu?');
+
+            const result = await axios(config);
+            setDeatilLoading(false);
+            console.log(result.data);
+            setBlogDetail(result.data);
+        } catch (error) {
+            toastErrorNotify(error.message)
         }
     }
 
@@ -45,38 +72,24 @@ const BlogContext = ({ children }) => {
             toastErrorNotify(error.message);
         }
     }
-    const updateGetPost = async (slug, token, user_id, post_id) => {
-        //? for view count increase
+
+    const postLike = async (user_id) => {
+        const token = window.atob(sessionStorage.getItem('token'))
+
         try {
-            const data = JSON.stringify({
-                "user": user_id,
-                "post": post_id
-            });
+            const data = {
+                "user_id": user_id
+                // "post": blogDetail.id
+            };
             const config = {
-                method: 'get',
-                url: `${url}blog/posts/${slug}`,
+                method: 'post',
+                url: `${url}blog/like/`,
                 headers: {
                     'Authorization': `Token ${token}`,
-                    'Content-Type': 'application/json',
-                    'Cookie': 'csrftoken=hg8jtk9cKr6iaVG9AY6j7ynqx0s18Ulx; sessionid=crcnox2a76sf9d54b1bga52ksj7yxpwt'
-                },
-                // data: data
-            };
-            const res = await axios(config)
-                .then(function (response) {
-                    console.log(JSON.stringify(response.data));
-                })
-                .catch(function (error) {
-                    // toastErrorNotify(error.message);
-                });
-        } catch (error) {
-            toastErrorNotify(error.message);
-        }
-    }
-    const postLike = async (like) => {
-        try {
-            const res = await axios.post(`${url}blog/like/`, like)
-            if (res.status !== 200) {
+                }
+            }
+            const res = await axios.post(`${url}blog/like/`, data, config)
+            if (res.status === 200 || res.status === 201) {
                 console.log(res);
                 toastSuccessNotify('Thanks a lot')
             }
@@ -86,13 +99,13 @@ const BlogContext = ({ children }) => {
     }
 
     const value = {
-        posts,
-        setPosts,
-        getCategories,
+        blogPosts,
+        setBlogposts,
         getBlogPosts,
-        createPost,
+        blogDetail,
+        deatilLoading,
+        getOneBlogPost,
         postLike,
-        updateGetPost
     }
     return (
         <BlogDataContext.Provider value={value}>

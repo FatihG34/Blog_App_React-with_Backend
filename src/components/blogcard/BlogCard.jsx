@@ -17,31 +17,27 @@ import { AuthContextProv } from '../../context/AuthContext';
 
 
 
-export default function BlogCard({ data }) {
+export default function BlogCard({ blogData }) {
     const navigate = useNavigate();
-    const { postLike } = React.useContext(BlogDataContext)
+
     const { currentUser } = React.useContext(AuthContextProv)
-    // console.log(data);
-    const handleLike = (user_id) => {
-        const like = {
-            "user": user_id,
-            // "post": blogPost_id
-        }
-        console.log(like);
-        postLike(like)
+
+
+    const handleClick = (slug) => {
+        navigate(`/details/${slug}`, { state: { slug } })
     }
-    // console.log(currentUser.id);
+    console.log(blogData.slug);
     return (
         <Card sx={{ maxWidth: 345, width: 350, height: 470, position: "relative" }}>
-            <div onClick={() => navigate(`/details/${data.slug}`, { state: { data } })} style={{ cursor: 'pointer' }}>
+            <div onClick={() => handleClick(blogData.slug)} style={{ cursor: 'pointer' }}>
                 <CardMedia
                     component="img"
                     height="200"
-                    image={data.image}
-                    alt={data.title}
+                    image={blogData.image}
+                    alt={blogData.title}
                 />
                 <CardContent sx={{ bgcolor: '#81abc2', height: 120 }}>
-                    <Typography variant='h6'>{data.title}</Typography>
+                    <Typography variant='h6'>{blogData.title}</Typography>
                     <Typography
                         variant="body2"
                         color="text.secondary"
@@ -53,37 +49,36 @@ export default function BlogCard({ data }) {
                             WebkitBoxOrient: 'vertical',
                         }}
                     >
-                        {data.content}
+                        {blogData.content}
                     </Typography>
                 </CardContent>
             </div>
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: green[500] }} aria-label="blog">
-                        {((data.author).slice(0, 1)).toUpperCase()}
+                        {((blogData.author).slice(0, 1)).toUpperCase()}
                     </Avatar>
                 }
-                title={data.author.toUpperCase()}
-                subheader={(new Date(data.published_date).toUTCString()).slice(0, 16)}
-            // subheader={data.published_date}
+                title={blogData.author.toUpperCase()}
+                subheader={(new Date(blogData.published_date).toUTCString()).slice(0, 16)}
             />
             <CardActions disableSpacing sx={{ position: "absolute", bottom: "5px", left: "5px" }}>
-                <IconButton aria-label="like" onClick={() => handleLike(currentUser.id)}>
+                <IconButton aria-label="like">
                     <FavoriteIcon />
                     <Typography sx={{ ml: 1 }}>
-                        {data.like_count}
+                        {blogData.like_count}
                     </Typography>
                 </IconButton>
                 <IconButton aria-label="view">
                     <VisibilityTwoToneIcon />
                     <Typography sx={{ ml: 1 }}>
-                        {data.post_view_count}
+                        {blogData.post_view_count}
                     </Typography>
                 </IconButton>
                 <IconButton aria-label="comment">
                     <ChatBubbleOutlineOutlinedIcon />
                     <Typography sx={{ ml: 1 }}>
-                        {data.comment_count}
+                        {blogData.comment_count}
                     </Typography>
                 </IconButton>
             </CardActions>

@@ -7,13 +7,13 @@ import { BlogDataContext } from '../context/BlogContext'
 
 const NewBlog = () => {
     const { currentUser } = useContext(AuthContextProv)
-    const { posts, setPosts, createPost } = useContext(BlogDataContext)
+    const { blogPosts, setBlogposts, createPost } = useContext(BlogDataContext)
     const navigate = useNavigate()
 
     const handleChange = (e) => {
         e.preventDefault()
-        const { name, value } = e.target
-        setPosts({ [name]: value })
+        // const { name, value } = e.target
+        // setPosts({ [name]: value })
     }
     const handleSubmt = (e) => {
         e.preventDefault()
@@ -30,7 +30,7 @@ const NewBlog = () => {
             style={{ minHeight: '100vh', marginTop: '10px' }}
         >
             <Grid item width={'50%'}>
-                <BlogForm handleChange={handleChange} handleSubmt={handleSubmt} posts={posts} />
+                <BlogForm handleChange={handleChange} handleSubmt={handleSubmt} posts={blogPosts} />
             </Grid>
         </Grid>
     )
