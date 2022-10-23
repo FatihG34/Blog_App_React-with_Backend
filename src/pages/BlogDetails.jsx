@@ -14,28 +14,37 @@ import { useLocation } from 'react-router-dom';
 import { BlogDataContext } from '../context/BlogContext';
 import { AuthContextProv } from '../context/AuthContext';
 import { useContext, useEffect } from 'react';
+import Loading from '../assets/loading.gif'
 
 
 const BlogDetails = () => {
+    const { currentUser } = useContext(AuthContextProv)
+    const { blogDetail, getOneBlogPost, deatilLoading, postLike } = useContext(BlogDataContext)
     const { state } = useLocation();
     const { slug } = state
-    const { currentUser } = useContext(AuthContextProv)
-    const { postLike, blogDetail, getOneBlogPost } = useContext(BlogDataContext)
 
     console.log("burda neler oluyor");
+    console.log(blogDetail);
+
+    const handleLike = (user_id, blog_id) => {
+        postLike(user_id, blog_id)
+    }
+
+
 
     useEffect(() => {
+        getOneBlogPost(slug)
         console.log("buraya giriyor mu")
     }, [])
 
-
-    const handleLike = (user_id) => {
-        postLike(user_id)
-    }
-
     console.log(blogDetail);
-    console.log(state);
-    console.log(slug);
+    if (deatilLoading) {
+        return (
+            <div style={{ backgroundColor: 'black', height: '93.35vh', display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
+                <img src={Loading} alt="Loading..." width={'800'} />
+            </div>
+        )
+    }
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', marginTop: 20 }}>
             <Card sx={{ maxWidth: 1000, width: 700, height: 600, position: "relative" }}>
@@ -71,10 +80,9 @@ const BlogDetails = () => {
                     }
                     title={blogDetail.author.toUpperCase()}
                     subheader={(new Date(blogDetail.published_date).toUTCString()).slice(0, 16)}
-                // subheader={data.published_date}
                 />
                 <CardActions disableSpacing sx={{ position: "absolute", bottom: "5px", left: "5px" }}>
-                    <IconButton aria-label="like" onClick={() => handleLike(currentUser.id)}>
+                    <IconButton aria-label="like" onClick={() => handleLike(currentUser.id, blogDetail.id)}>
                         <FavoriteIcon />
                         <Typography sx={{ ml: 1 }}>
                             {blogDetail.like_count}

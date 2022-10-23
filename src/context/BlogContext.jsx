@@ -42,20 +42,18 @@ const BlogContext = ({ children }) => {
     const getOneBlogPost = async (slug) => {
         const token = window.atob(sessionStorage.getItem('token'))
         try {
-            const config = {
+            let config = {
                 method: 'get',
-                url: `${url}blog/posts/react-javascript-library-68d058ce5c`,
-                // url: `${url}blog/posts/${slug}`,
+                url: `${url}blog/posts/${slug}`,
                 headers: {
                     'Authorization': `Token ${token}`,
                 }
             };
-            console.log('Bu işlem ile view sayısı bir artmış mı oldu?');
-
             const result = await axios(config);
-            setDeatilLoading(false);
-            console.log(result.data);
+            console.log('Bu işlem ile view sayısı bir artmış mı oldu?');
             setBlogDetail(result.data);
+            console.log(result.data);
+            setDeatilLoading(false);
         } catch (error) {
             toastErrorNotify(error.message)
         }
@@ -73,13 +71,13 @@ const BlogContext = ({ children }) => {
         }
     }
 
-    const postLike = async (user_id) => {
+    const postLike = async (user_id, post_id) => {
         const token = window.atob(sessionStorage.getItem('token'))
 
         try {
             const data = {
-                "user_id": user_id
-                // "post": blogDetail.id
+                "user_id": user_id,
+                "post": post_id
             };
             const config = {
                 method: 'post',
