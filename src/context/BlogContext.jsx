@@ -1,7 +1,7 @@
 import axios from 'axios'
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useState } from 'react'
 import { toastErrorNotify, toastSuccessNotify } from '../helper/helper';
-import { AuthContextProv } from './AuthContext';
+// import { AuthContextProv } from './AuthContext';
 
 
 export const BlogDataContext = createContext()
@@ -13,7 +13,7 @@ const BlogContext = ({ children }) => {
     const [blogDetail, setBlogDetail] = useState([]) //* for blogDetail page
     const [category, setCategory] = useState("")
     const [deatilLoading, setDeatilLoading] = useState(true) //* for blogDetail page
-
+    const [loadingCategory, setLoadingCategory] = useState(true)
 
     // const { currentUser } = useContext(AuthContextProv)
 
@@ -23,6 +23,7 @@ const BlogContext = ({ children }) => {
             setCategory(res.data)
             sessionStorage.setItem("categories", JSON.stringify(res.data))
             console.log(category)
+            setLoadingCategory(false)
         } catch (error) {
             toastErrorNotify(error.message);
         }
@@ -95,8 +96,32 @@ const BlogContext = ({ children }) => {
             toastErrorNotify(error.message);
         }
     }
+    const setComments = async (slug, commendData) => {
+        const token = window.atob(sessionStorage.getItem('token'));
+        const commentUrl = url + `blog/posts/${slug}/add_comment/`;
+        try {
+            const data = {
+                "content": commendData
+            };
+            var config = {
+                method: 'post',
+                url: commentUrl,
+                headers: {
+                    'Authorization': `Token ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                data: data
+            };
+            await axios(config)
+        } catch (error) {
+            toastErrorNotify(error.message,)
+        }
+    }
 
     const value = {
+        getCategories,
+        category,
+        loadingCategory,
         blogPosts,
         setBlogposts,
         getBlogPosts,
@@ -104,6 +129,7 @@ const BlogContext = ({ children }) => {
         deatilLoading,
         getOneBlogPost,
         postLike,
+        setComments
     }
     return (
         <BlogDataContext.Provider value={value}>
