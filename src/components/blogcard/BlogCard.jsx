@@ -26,7 +26,7 @@ export default function BlogCard({ blogData }) {
     const handleClick = (slug) => {
         navigate(`/details/${slug}`, { state: { slug } })
     }
-    console.log(blogData.slug);
+    // console.log(blogData.slug);
     return (
         <Card sx={{ maxWidth: 345, width: 350, height: 470, position: "relative" }}>
             <div onClick={() => handleClick(blogData.slug)} style={{ cursor: 'pointer' }}>

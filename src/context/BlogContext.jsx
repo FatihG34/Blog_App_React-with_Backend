@@ -14,7 +14,7 @@ const BlogContext = ({ children }) => {
     const [category, setCategory] = useState("")
     const [deatilLoading, setDeatilLoading] = useState(true) //* for blogDetail page
     const [loadingCategory, setLoadingCategory] = useState(true)
-    const [page, setPage] = useState(6)
+    const [page, setPage] = useState(12)
     // const { currentUser } = useContext(AuthContextProv)
 
     const getCategories = async () => {
@@ -33,7 +33,7 @@ const BlogContext = ({ children }) => {
         try {
             const res = await axios.get(`${url}blog/posts/`)
             setBlogposts(res.data.results)
-            console.log(res.data);
+            // console.log(res.data);
             return res;
         } catch (error) {
             toastErrorNotify(error.message);
@@ -43,7 +43,7 @@ const BlogContext = ({ children }) => {
         try {
             const res = await axios.get(`${url}blog/posts/?limit=${page}&offset=0`)
             setBlogposts(res.data.results)
-            console.log(res.data);
+            // console.log(res.data);
             return res;
         } catch (error) {
             toastErrorNotify(error.message);
