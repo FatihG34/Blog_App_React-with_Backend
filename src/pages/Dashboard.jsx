@@ -1,11 +1,11 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import BlogCard from '../components/blogcard/BlogCard';
 import Loading from '../assets/loading.gif'
 import { useContext, useEffect, useState } from 'react';
 import { BlogDataContext } from '../context/BlogContext';
 
 const Dashboard = () => {
-    const { blogPosts, getBlogPosts } = useContext(BlogDataContext)
+    const { blogPosts, getBlogPosts, setPage, page, getPaginationPosts } = useContext(BlogDataContext)
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
@@ -13,6 +13,10 @@ const Dashboard = () => {
         setIsLoading(false)
     }, [])
 
+    const handlePage = () => {
+        setPage(page + 6)
+        getPaginationPosts()
+    }
 
     if (isLoading) {
         return (
@@ -26,6 +30,7 @@ const Dashboard = () => {
     return (
         <Box sx={{ textAlign: 'center', fontFamily: 'Girassol, cursive' }} >
             <Typography variant='h3' sx={{ fontFamily: 'Girassol, cursive' }} >-Dashboard-</Typography>
+            <Button onClick={handlePage}>Next Page</Button>
             <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 4, mt: 4, textAlign: 'left' }}>
                 {blogPosts?.map((post, index) => (
                     <BlogCard blogData={post} key={index} />

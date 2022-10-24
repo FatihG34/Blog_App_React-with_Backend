@@ -31,6 +31,16 @@ const BlogContext = ({ children }) => {
 
     const getBlogPosts = async () => {
         try {
+            const res = await axios.get(`${url}blog/posts/`)
+            setBlogposts(res.data.results)
+            console.log(res.data);
+            return res;
+        } catch (error) {
+            toastErrorNotify(error.message);
+        }
+    }
+    const getPaginationPosts = async () => {
+        try {
             const res = await axios.get(`${url}blog/posts/?limit=${page}&offset=0`)
             setBlogposts(res.data.results)
             console.log(res.data);
@@ -39,7 +49,6 @@ const BlogContext = ({ children }) => {
             toastErrorNotify(error.message);
         }
     }
-
 
     const getOneBlogPost = async (slug) => {
         const token = window.atob(sessionStorage.getItem('token'))
@@ -154,6 +163,7 @@ const BlogContext = ({ children }) => {
         createPost,
         setPage,
         page,
+        getPaginationPosts,
     }
     return (
         <BlogDataContext.Provider value={value}>
