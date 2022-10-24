@@ -12,13 +12,16 @@ const NewBlog = () => {
     const navigate = useNavigate()
 
     const handleChange = (e) => {
-        e.preventDefault()
+        // e.preventDefault()
         const { name, value } = e.target
-        setCreateBlog({ [name]: value })
+        setCreateBlog({ ...createBlog, [name]: value })
+        console.log(name, value)
     }
-    const handleSubmt = (e) => {
-        e.preventDefault()
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        createPost(createBlog, navigate)
         console.log(createBlog);
+        setCreateBlog("")
     }
     console.log(createBlog);
     useEffect(() => {
@@ -31,10 +34,10 @@ const NewBlog = () => {
             direction="column"
             alignItems="center"
             justify="center"
-            style={{ minHeight: '100vh', marginTop: '10px' }}
+            style={{ maxHeight: '100vh', marginTop: '10px' }}
         >
-            <Grid item width={'50%'}>
-                <BlogForm handleChange={handleChange} handleSubmt={handleSubmt} posts={createBlog} />
+            <Grid item width={'30%'}>
+                <BlogForm handleChange={handleChange} handleSubmit={handleSubmit} posts={createBlog} />
             </Grid>
         </Grid>
     )

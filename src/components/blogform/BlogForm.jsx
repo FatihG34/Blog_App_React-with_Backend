@@ -12,7 +12,7 @@ const BlogForm = ({ handleChange, handleSubmit, posts }) => {
         )
     }
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => handleSubmit(e)}>
             <Stack spacing={3} direction='column' >
                 <TextField
                     label='Title'
@@ -28,7 +28,9 @@ const BlogForm = ({ handleChange, handleSubmit, posts }) => {
                     <Select
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
-                        value={posts.category}
+                        // value={posts.category}
+                        name='category'
+                        defaultValue=""
                         label="Categories"
                         required
                         onChange={handleChange}
@@ -45,11 +47,10 @@ const BlogForm = ({ handleChange, handleSubmit, posts }) => {
                 <TextField
                     label='Image URL'
                     type='url'
-                    name='imageUrl'
+                    name='image'
                     value={posts.image}
                     id="outlined-size-normal"
                     onChange={handleChange}
-                    // onChange={handleChange} same with above
                     required
                 />
                 <TextField
@@ -67,7 +68,9 @@ const BlogForm = ({ handleChange, handleSubmit, posts }) => {
                     <Select
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
-                        value={posts.status}
+                        name='status'
+                        defaultValue=""
+                        // value={posts.status}
                         label="Status"
                         required
                         onChange={handleChange}

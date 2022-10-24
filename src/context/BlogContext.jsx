@@ -14,7 +14,7 @@ const BlogContext = ({ children }) => {
     const [category, setCategory] = useState("")
     const [deatilLoading, setDeatilLoading] = useState(true) //* for blogDetail page
     const [loadingCategory, setLoadingCategory] = useState(true)
-
+    const [page, setPage] = useState(6)
     // const { currentUser } = useContext(AuthContextProv)
 
     const getCategories = async () => {
@@ -22,7 +22,7 @@ const BlogContext = ({ children }) => {
             const res = await axios.get(`${url}blog/category/`)
             setCategory(res.data)
             sessionStorage.setItem("categories", JSON.stringify(res.data))
-            console.log(category)
+            // console.log(category)
             setLoadingCategory(false)
         } catch (error) {
             toastErrorNotify(error.message);
@@ -31,8 +31,9 @@ const BlogContext = ({ children }) => {
 
     const getBlogPosts = async () => {
         try {
-            const res = await axios.get(`${url}blog/posts/`)
+            const res = await axios.get(`${url}blog/posts/?limit=${page}&offset=0`)
             setBlogposts(res.data.results)
+            console.log(res.data);
             return res;
         } catch (error) {
             toastErrorNotify(error.message);
@@ -60,13 +61,33 @@ const BlogContext = ({ children }) => {
         }
     }
 
-    const createPost = async (blogData) => {
+    const createPost = async (blogData, navigate) => {
+        const token = window.atob(sessionStorage.getItem('token'))
         try {
-            const res = await axios.post(`${url}blog/posts/`, blogData)
-            if (res.status === 200) {
+            // var data = JSON.stringify({
+            //     "title": "Amazon Web Services",
+            //     "category": 4,
+            //     "content": "Amazon Web Services, ",
+            //     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/150px-Amazon_Web_Services_Logo.svg.png",
+            //     "status": "p"
+            // });
+            const config = {
+                method: 'post',
+                url: `${url}blog/posts/`,
+                headers: {
+                    'Authorization': `Token ${token}`,
+                },
+                data: blogData
+            };
+
+            const res = await axios(config)
+            // const res = await axios.post(`${url}blog/posts/`, blogData)
+            if (res.status === 201) {
                 getBlogPosts()
+                navigate('/')
                 toastSuccessNotify('Blog created successfully')
             }
+            // navigate('/newblog')
         } catch (error) {
             toastErrorNotify(error.message);
         }
@@ -129,7 +150,10 @@ const BlogContext = ({ children }) => {
         deatilLoading,
         getOneBlogPost,
         postLike,
-        setComments
+        setComments,
+        createPost,
+        setPage,
+        page,
     }
     return (
         <BlogDataContext.Provider value={value}>
