@@ -25,11 +25,11 @@ const BlogDetails = () => {
     const { state } = useLocation();
     const { slug } = state
 
-    console.log("burda neler oluyor");
     console.log(blogDetail);
 
-    const handleLike = (user_id, blog_id) => {
-        postLike(user_id, blog_id)
+    const handleLike = (user, blog_id) => {
+        console.log("burda neler oluyor");
+        postLike(user, blog_id, slug)
     }
     const handleChange = (e) => {
         e.preventDefault();
@@ -47,10 +47,8 @@ const BlogDetails = () => {
 
     useEffect(() => {
         getOneBlogPost(slug)
-        console.log("buraya giriyor mu")
     }, [])
 
-    console.log(blogDetail);
     if (deatilLoading) {
         return (
             <div style={{ backgroundColor: 'black', height: '93.35vh', display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
@@ -90,7 +88,7 @@ const BlogDetails = () => {
                         subheader={(new Date(blogDetail.published_date).toUTCString()).slice(0, 16)}
                     />
                     <CardActions disableSpacing sx={{ position: "absolute", bottom: "5px", left: "5px" }}>
-                        <IconButton aria-label="like" onClick={() => handleLike(currentUser.id, blogDetail.id)}>
+                        <IconButton aria-label="like" onClick={() => handleLike(currentUser.id, blogDetail.id)} sx={{ color: (blogDetail.post_like?.filter((like) => like.user_id === currentUser.id)[0]?.user_id) && "red" }}>
                             <FavoriteIcon />
                             <Typography sx={{ ml: 1 }}>
                                 {blogDetail.like_count}
