@@ -30,13 +30,14 @@ const Dashboard = () => {
     return (
         <Box sx={{ textAlign: 'center', fontFamily: 'Girassol, cursive' }} >
             <Typography variant='h3' sx={{ fontFamily: 'Girassol, cursive' }} >-Dashboard-</Typography>
-            <Button onClick={handlePage}>Next Page</Button>
+
             <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 4, mt: 4, textAlign: 'left' }}>
                 {blogPosts?.map((post, index) => (
                     <BlogCard blogData={post} key={index} />
                 ))}
                 {/* burda gelen data ekrana işleniyor */}
             </Box>
+            <Button onClick={handlePage}>Next Page</Button>
         </Box >
     );
 }

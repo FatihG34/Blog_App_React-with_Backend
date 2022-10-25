@@ -42,7 +42,6 @@ const BlogForm = ({ handleChange, handleSubmit, posts }) => {
                             <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
                         ))}
                     </Select>
-                    {/* <FormHelperText>With label + helper text</FormHelperText> */}
                 </FormControl>
                 <TextField
                     label='Image URL'
@@ -64,10 +63,10 @@ const BlogForm = ({ handleChange, handleSubmit, posts }) => {
                     onChange={handleChange}
                 />
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="demo-simple-select-helper-label">Status</InputLabel>
+                    <InputLabel id="status">Status</InputLabel>
                     <Select
-                        labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
+                        labelId="status"
+                        id="status"
                         name='status'
                         defaultValue=""
                         // value={posts.status}
@@ -86,7 +85,7 @@ const BlogForm = ({ handleChange, handleSubmit, posts }) => {
                     variant='contained'
                     type='submit'
                     value='submit'
-                >Submit</Button>
+                >Add New Blog Post</Button>
             </Stack>
         </form>
     )
