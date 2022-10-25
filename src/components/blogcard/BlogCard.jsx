@@ -63,9 +63,9 @@ export default function BlogCard({ blogData }) {
                 subheader={(new Date(blogData.published_date).toUTCString()).slice(0, 16)}
             />
             <CardActions disableSpacing sx={{ position: "absolute", bottom: "5px", left: "5px" }}>
-                <IconButton aria-label="like">
+                <IconButton aria-label="like" sx={{ color: (blogData.post_like?.filter((like) => like.user_id === currentUser.id)[0]?.user_id) && "red" }}>
                     <FavoriteIcon />
-                    <Typography sx={{ ml: 1 }}>
+                    <Typography sx={{ ml: 1 }} >
                         {blogData.like_count}
                     </Typography>
                 </IconButton>
