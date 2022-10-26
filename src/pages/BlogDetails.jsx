@@ -9,8 +9,10 @@ import Typography from '@mui/material/Typography';
 import { green } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import UpgradeIcon from '@mui/icons-material/Upgrade';
 import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BlogDataContext } from '../context/BlogContext';
 import { AuthContextProv } from '../context/AuthContext';
 import { useContext, useEffect, useState } from 'react';
@@ -24,6 +26,7 @@ const BlogDetails = () => {
     const { blogDetail, getOneBlogPost, deatilLoading, postLike, setComments } = useContext(BlogDataContext)
     const { state } = useLocation();
     const { slug } = state
+    const navigate = useNavigate()
 
     console.log(blogDetail);
 
@@ -57,7 +60,7 @@ const BlogDetails = () => {
         )
     }
     return (
-        <Box style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', justifyContent: 'center', alignContent: 'center' }} sx={{ maxWidth: { xs: "100%", sm: "80%", md: "60%" }, marginX: "auto", marginY: 2 }}>
+        <Box style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }} sx={{ maxWidth: { xs: "100%", sm: "80%", md: "60%" }, marginX: "auto", marginY: 2 }}>
             <Card>
                 <Box>
                     <CardMedia
@@ -87,27 +90,34 @@ const BlogDetails = () => {
                         title={blogDetail.author.toUpperCase()}
                         subheader={(new Date(blogDetail.published_date).toUTCString()).slice(0, 16)}
                     />
-                    <CardActions disableSpacing sx={{ position: "absolute", bottom: "5px", left: "5px" }}>
-                        <IconButton aria-label="like" onClick={() => handleLike(currentUser.id, blogDetail.id)} sx={{ color: (blogDetail.post_like?.filter((like) => like.user_id === currentUser.id)[0]?.user_id) && "red" }}>
-                            <FavoriteIcon />
-                            <Typography sx={{ ml: 1 }}>
-                                {blogDetail.like_count}
-                            </Typography>
-                        </IconButton>
-                        <IconButton aria-label="view">
-                            <VisibilityTwoToneIcon />
-                            <Typography sx={{ ml: 1 }}>
-                                {blogDetail.post_view_count}
-                            </Typography>
-                        </IconButton>
-                        <IconButton aria-label="comment">
-                            <ChatBubbleOutlineOutlinedIcon />
-                            <Typography sx={{ ml: 1 }}>
-                                {blogDetail.comment_count}
-                            </Typography>
-                        </IconButton>
+                    <CardActions disableSpacing sx={{ width: '98%', position: "absolute", bottom: "5px", left: "5px", display: 'flex', justifyContent: 'space-between' }}>
+                        <Box>
+                            <IconButton aria-label="like" onClick={() => handleLike(currentUser.id, blogDetail.id)} sx={{ color: (blogDetail.post_like?.filter((like) => like.user_id === currentUser.id)[0]?.user_id) && "red" }}>
+                                <FavoriteIcon />
+                                <Typography sx={{ ml: 1 }}>
+                                    {blogDetail.like_count}
+                                </Typography>
+                            </IconButton>
+                            <IconButton aria-label="view">
+                                <VisibilityTwoToneIcon />
+                                <Typography sx={{ ml: 1 }}>
+                                    {blogDetail.post_view_count}
+                                </Typography>
+                            </IconButton>
+                            <IconButton aria-label="comment">
+                                <ChatBubbleOutlineOutlinedIcon />
+                                <Typography sx={{ ml: 1 }}>
+                                    {blogDetail.comment_count}
+                                </Typography>
+                            </IconButton>
+                        </Box>
+                        <Box sx={{ width: '35%', display: 'flex', justifyContent: 'space-evenly' }}>
+                            <Button variant="contained" color="success" startIcon={<UpgradeIcon />} onClick={() => navigate('/update', { state: { blogDetail } })}>Update This Blog</Button>
+                            <Button variant="contained" color="error" startIcon={<DeleteForeverIcon />}>Delete This Blog</Button>
+                        </Box>
                     </CardActions>
                 </Box>
+
             </Card>
             <Box>
                 <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', marginTop: 3 }}>

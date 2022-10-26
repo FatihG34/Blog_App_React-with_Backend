@@ -10,7 +10,7 @@ const NewBlog = () => {
     const { currentUser } = useContext(AuthContextProv)
     const { createPost, getCategories } = useContext(BlogDataContext)
     const navigate = useNavigate()
-
+    const submitButtonInnerContent = 'Add New Blog Post';
     const handleChange = (e) => {
         // e.preventDefault()
         const { name, value } = e.target
@@ -37,7 +37,7 @@ const NewBlog = () => {
             style={{ maxHeight: '100vh', marginTop: '10px' }}
         >
             <Grid item width={'30%'}>
-                <BlogForm handleChange={handleChange} handleSubmit={handleSubmit} posts={createBlog} />
+                <BlogForm handleChange={handleChange} handleSubmit={handleSubmit} posts={createBlog} buttonInnerText={submitButtonInnerContent} />
             </Grid>
         </Grid>
     )
