@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import { Button, FormControl, InputLabel, MenuItem, Select, Stack } from '@mui/material';
 import { BlogDataContext } from '../../context/BlogContext';
 
-const BlogForm = ({ handleChange, handleSubmit, posts }) => {
+const BlogForm = ({ handleChange, handleSubmit, posts, buttonInnerText }) => {
     const { category, loadingCategory } = useContext(BlogDataContext)
 
     if (loadingCategory) {
@@ -85,7 +85,7 @@ const BlogForm = ({ handleChange, handleSubmit, posts }) => {
                     variant='contained'
                     type='submit'
                     value='submit'
-                >Add New Blog Post</Button>
+                >{buttonInnerText}</Button>
             </Stack>
         </form>
     )
