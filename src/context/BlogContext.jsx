@@ -14,7 +14,7 @@ const BlogContext = ({ children }) => {
     const [category, setCategory] = useState("");
     const [deatilLoading, setDeatilLoading] = useState(true); //* for blogDetail page
     const [loadingCategory, setLoadingCategory] = useState(true);
-    const [page, setPage] = useState(12);
+    const [page, setPage] = useState(6);
     // const { currentUser } = useContext(AuthContextProv)
 
     const getCategories = async () => {
@@ -31,16 +31,8 @@ const BlogContext = ({ children }) => {
 
     const getBlogPosts = async () => {
         try {
-            const res = await axios.get(`${url}blog/posts/`)
+            const res = await axios.get(`${url}blog/posts/?limit=${page}&offset=0`)
             setBlogposts(res.data.results)
-        } catch (error) {
-            toastErrorNotify(error.message);
-        }
-    };
-    const getPaginationPosts = async () => {
-        try {
-            const res = await axios.get(`${url}blog/posts/?limit=${page}&offset=0`);
-            setBlogposts(res.data.results);
         } catch (error) {
             toastErrorNotify(error.message);
         }
@@ -156,7 +148,6 @@ const BlogContext = ({ children }) => {
         createPost,
         setPage,
         page,
-        getPaginationPosts,
     }
     return (
         <BlogDataContext.Provider value={value}>
