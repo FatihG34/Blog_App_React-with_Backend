@@ -51,6 +51,7 @@ const BlogContext = ({ children }) => {
             const result = await axios(config);
             setBlogDetail(result.data);
             setDeatilLoading(false);
+            console.log(result.data);
         } catch (error) {
             toastErrorNotify(error.message);
         }
@@ -79,6 +80,33 @@ const BlogContext = ({ children }) => {
             toastErrorNotify(error.message);
         }
     };
+    const updatePost = async (slug, navigate, data) => {
+        const token = window.atob(sessionStorage.getItem('token'));
+        // var data = JSON.stringify({
+        //     "title": "Angular",
+        //     "category": 1,
+        //     "content": "Angular (also referred to as 'Angular 2+') is a TypeScript-based free and open-source web application framework lead by the Angular Team at Google and by a community of individuals and corporations. Angular is a complete rewrite from the same team that built AngularJS.  !!!!!!!!!!!!!!????????????? Ok",
+        //     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/250px-Angular_full_color_logo.svg.png",
+        //     "status": "p"
+        // });
+        const config = {
+            method: 'put',
+            url: `${url}blog/posts/${slug}/`,
+            headers: {
+                'Authorization': `Token ${token}`,
+            },
+            data: data
+        };
+        try {
+            const res = await axios(config)
+            if (res.status === 200) {
+                toastSuccessNotify('Congrats Blog Updated Successfuly')
+                navigate('/')
+            }
+        } catch (error) {
+            toastErrorNotify(error.message)
+        }
+    }
 
     const postLike = async (user, post_id, slug) => {
         const token = window.atob(sessionStorage.getItem('token'));
@@ -148,6 +176,7 @@ const BlogContext = ({ children }) => {
         createPost,
         setPage,
         page,
+        updatePost
     }
     return (
         <BlogDataContext.Provider value={value}>

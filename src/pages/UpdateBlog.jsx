@@ -9,7 +9,7 @@ const UpdateBlog = () => {
     const { state } = useLocation()
     const [updateBlog, setUpdateBlog] = useState(state.blogDetail)
     const { currentUser } = useContext(AuthContextProv)
-    const { createPost, getCategories } = useContext(BlogDataContext)
+    const { updatePost, getCategories } = useContext(BlogDataContext)
     const navigate = useNavigate()
     const submitButtonInnerContent = 'Update Blog Post';
     const handleChange = (e) => {
@@ -20,11 +20,12 @@ const UpdateBlog = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        // createPost(createBlog, navigate)  burasu update fonksiyonu olacak
+        updatePost(state.blogDetail.slug, navigate, updateBlog)  //* burası update fonksiyonu olacak
         console.log(updateBlog);
         setUpdateBlog("")
     }
     console.log(updateBlog);
+    console.log(state)
     useEffect(() => {
         getCategories()
     }, [])

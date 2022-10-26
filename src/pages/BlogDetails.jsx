@@ -29,6 +29,7 @@ const BlogDetails = () => {
     const navigate = useNavigate()
 
     console.log(blogDetail);
+    console.log(currentUser);
 
     const handleLike = (user, blog_id) => {
         console.log("burda neler oluyor");
@@ -111,10 +112,15 @@ const BlogDetails = () => {
                                 </Typography>
                             </IconButton>
                         </Box>
-                        <Box sx={{ width: '35%', display: 'flex', justifyContent: 'space-evenly' }}>
-                            <Button variant="contained" color="success" startIcon={<UpgradeIcon />} onClick={() => navigate('/update', { state: { blogDetail } })}>Update This Blog</Button>
-                            <Button variant="contained" color="error" startIcon={<DeleteForeverIcon />}>Delete This Blog</Button>
-                        </Box>
+                        {
+                            blogDetail.author_id === currentUser.id
+                            &&
+                            <Box sx={{ width: '35%', display: 'flex', justifyContent: 'space-evenly' }}>
+                                <Button variant="contained" color="success" startIcon={<UpgradeIcon />} onClick={() => navigate('/update', { state: { blogDetail } })}>Update This Blog</Button>
+                                <Button variant="contained" color="error" startIcon={<DeleteForeverIcon />}>Delete This Blog</Button>
+                            </Box>
+                        }
+
                     </CardActions>
                 </Box>
 
