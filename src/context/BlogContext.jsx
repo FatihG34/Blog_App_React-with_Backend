@@ -82,13 +82,6 @@ const BlogContext = ({ children }) => {
     };
     const updatePost = async (slug, navigate, data) => {
         const token = window.atob(sessionStorage.getItem('token'));
-        // var data = JSON.stringify({
-        //     "title": "Angular",
-        //     "category": 1,
-        //     "content": "Angular (also referred to as 'Angular 2+') is a TypeScript-based free and open-source web application framework lead by the Angular Team at Google and by a community of individuals and corporations. Angular is a complete rewrite from the same team that built AngularJS.  !!!!!!!!!!!!!!????????????? Ok",
-        //     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/250px-Angular_full_color_logo.svg.png",
-        //     "status": "p"
-        // });
         const config = {
             method: 'put',
             url: `${url}blog/posts/${slug}/`,
@@ -101,13 +94,32 @@ const BlogContext = ({ children }) => {
             const res = await axios(config)
             if (res.status === 200) {
                 toastSuccessNotify('Congrats Blog Updated Successfuly')
-                navigate('/')
+                navigate(-1)
             }
         } catch (error) {
             toastErrorNotify(error.message)
         }
     }
+    const deletePost = async (slug, navigate) => {
+        const token = window.atob(sessionStorage.getItem('token'));
+        const config = {
+            method: 'delete',
+            url: `${url}blog/posts/${slug}/`,
+            headers: {
+                'Authorization': `Token ${token}`,
+            },
+        };
+        try {
+            const res = await axios(config)
+            if (res.status === 204) {
+                toastSuccessNotify('Deleted Successfuly')
+                navigate('/')
+            }
+        } catch (error) {
+            toastErrorNotify(error.message)
+        }
 
+    }
     const postLike = async (user, post_id, slug) => {
         const token = window.atob(sessionStorage.getItem('token'));
         const data = {
@@ -176,7 +188,8 @@ const BlogContext = ({ children }) => {
         createPost,
         setPage,
         page,
-        updatePost
+        updatePost,
+        deletePost
     }
     return (
         <BlogDataContext.Provider value={value}>

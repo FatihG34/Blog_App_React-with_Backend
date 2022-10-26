@@ -23,7 +23,7 @@ import { Box, Button, Divider, InputAdornment, List, ListItem, ListItemText, Tex
 const BlogDetails = () => {
     const [comment, setComment] = useState();
     const { currentUser } = useContext(AuthContextProv)
-    const { blogDetail, getOneBlogPost, deatilLoading, postLike, setComments } = useContext(BlogDataContext)
+    const { blogDetail, getOneBlogPost, deatilLoading, postLike, setComments, deletePost } = useContext(BlogDataContext)
     const { state } = useLocation();
     const { slug } = state
     const navigate = useNavigate()
@@ -51,7 +51,7 @@ const BlogDetails = () => {
 
     useEffect(() => {
         getOneBlogPost(slug)
-    }, [])
+    }, [comment])
 
     if (deatilLoading) {
         return (
@@ -61,7 +61,7 @@ const BlogDetails = () => {
         )
     }
     return (
-        <Box style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }} sx={{ maxWidth: { xs: "100%", sm: "80%", md: "60%" }, marginX: "auto", marginY: 2 }}>
+        <Box style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center', gap: 5 }} sx={{ maxWidth: { xs: "100%", sm: "80%", md: "60%" }, marginX: "auto", marginY: 2 }}>
             <Card>
                 <Box>
                     <CardMedia
@@ -112,19 +112,18 @@ const BlogDetails = () => {
                                 </Typography>
                             </IconButton>
                         </Box>
-                        {
-                            blogDetail.author_id === currentUser.id
-                            &&
-                            <Box sx={{ width: '35%', display: 'flex', justifyContent: 'space-evenly' }}>
-                                <Button variant="contained" color="success" startIcon={<UpgradeIcon />} onClick={() => navigate('/update', { state: { blogDetail } })}>Update This Blog</Button>
-                                <Button variant="contained" color="error" startIcon={<DeleteForeverIcon />}>Delete This Blog</Button>
-                            </Box>
-                        }
-
                     </CardActions>
-                </Box>
 
+                </Box>
             </Card>
+            {
+                blogDetail.author_id === currentUser.id
+                &&
+                <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-evenly', my: 3 }}>
+                    <Button variant="contained" color="success" size="medium" startIcon={<UpgradeIcon />} onClick={() => navigate(`/update/${blogDetail.slug}`, { state: { blogDetail } })}>Update This Blog</Button>
+                    <Button variant="contained" color="error" size="medium" startIcon={<DeleteForeverIcon />} onClick={() => deletePost(blogDetail.slug, navigate)} >Delete This Blog</Button>
+                </Box>
+            }
             <Box>
                 <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', marginTop: 3 }}>
                     {blogDetail.post_comment.map((comment) => (
@@ -137,22 +136,22 @@ const BlogDetails = () => {
                                             <Typography
                                                 sx={{ display: 'inline', mr: 2 }}
                                                 component="span"
-                                                variant="body2"
-                                                color="text.primary"
+                                                variant="body"
+                                                color="text.secondary"
                                             >
                                                 {(new Date(comment.time_stamp).toUTCString()).slice(0, 16)}
                                             </Typography>
                                             <Typography
                                                 component="p"
-                                                variant="body2"
-                                                color="text.secondary">
+                                                variant="h6"
+                                                color="text.primary">
                                                 {comment.content}
                                             </Typography>
                                         </>
                                     }
                                 />
                             </ListItem>
-                            <Divider variant="inset" component="li" />
+                            <Divider variant="outset" component="li" />
                         </>
                     ))}
                 </List>
