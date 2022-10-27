@@ -11,9 +11,10 @@ const url = "http://127.0.0.1:8000/"
 const BlogContext = ({ children }) => {
     const [blogPosts, setBlogposts] = useState([]);  //* for home  page
     const [blogDetail, setBlogDetail] = useState([]); //* for blogDetail page
-    const [category, setCategory] = useState("");
+    const [category, setCategory] = useState([]);
     const [deatilLoading, setDeatilLoading] = useState(true); //* for blogDetail page
     const [loadingCategory, setLoadingCategory] = useState(true);
+    const [userPosts, setUserPosts] = useState([])
     const [page, setPage] = useState(6);
     // const { currentUser } = useContext(AuthContextProv)
 
@@ -28,7 +29,6 @@ const BlogContext = ({ children }) => {
             toastErrorNotify(error.message);
         }
     };
-
     const getBlogPosts = async () => {
         try {
             const res = await axios.get(`${url}blog/posts/?limit=${page}&offset=0`)
@@ -37,7 +37,6 @@ const BlogContext = ({ children }) => {
             toastErrorNotify(error.message);
         }
     };
-
     const getOneBlogPost = async (slug) => {
         const token = window.atob(sessionStorage.getItem('token'));
         try {
@@ -56,7 +55,6 @@ const BlogContext = ({ children }) => {
             toastErrorNotify(error.message);
         }
     };
-
     const createPost = async (blogData, navigate) => {
         const token = window.atob(sessionStorage.getItem('token'));
         try {
@@ -172,7 +170,23 @@ const BlogContext = ({ children }) => {
             toastErrorNotify(error.message,)
         }
     }
-
+    const usersAllPosts = async () => {
+        const token = window.atob(sessionStorage.getItem('token'));
+        const config = {
+            method: 'get',
+            url: `${url}blog/all-posts/`,
+            headers: {
+                'Authorization': `Token ${token}`,
+                'Cookie': 'csrftoken=hg8jtk9cKr6iaVG9AY6j7ynqx0s18Ulx; sessionid=crcnox2a76sf9d54b1bga52ksj7yxpwt'
+            }
+        };
+        try {
+            const res = await axios(config)
+            setUserPosts(res.data)
+        } catch (error) {
+            toastErrorNotify(error.message)
+        }
+    }
     const value = {
         getCategories,
         category,
@@ -189,7 +203,9 @@ const BlogContext = ({ children }) => {
         setPage,
         page,
         updatePost,
-        deletePost
+        deletePost,
+        usersAllPosts,
+        userPosts
     }
     return (
         <BlogDataContext.Provider value={value}>

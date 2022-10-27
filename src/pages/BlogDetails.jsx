@@ -22,6 +22,7 @@ import { Box, Button, Divider, InputAdornment, List, ListItem, ListItemText, Tex
 
 const BlogDetails = () => {
     const [comment, setComment] = useState();
+    const [render, setRender] = useState(0)
     const { currentUser } = useContext(AuthContextProv)
     const { blogDetail, getOneBlogPost, deatilLoading, postLike, setComments, deletePost } = useContext(BlogDataContext)
     const { state } = useLocation();
@@ -45,13 +46,14 @@ const BlogDetails = () => {
         e.preventDefault();
         setComments(slug, comment);
         setComment("");
+        setRender(1)
     }
 
 
 
     useEffect(() => {
         getOneBlogPost(slug)
-    }, [comment])
+    }, [render])
 
     if (deatilLoading) {
         return (

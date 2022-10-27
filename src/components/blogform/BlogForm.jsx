@@ -31,6 +31,7 @@ const BlogForm = ({ handleChange, handleSubmit, posts, buttonInnerText }) => {
                         // value={posts.category}
                         name='category'
                         defaultValue=""
+                        value={posts.category}
                         label="Categories"
                         required
                         onChange={handleChange}
@@ -68,6 +69,7 @@ const BlogForm = ({ handleChange, handleSubmit, posts, buttonInnerText }) => {
                         labelId="status"
                         id="status"
                         name='status'
+                        value={posts.status}
                         defaultValue=""
                         // value={posts.status}
                         label="Status"
