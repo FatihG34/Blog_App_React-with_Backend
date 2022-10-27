@@ -47,16 +47,18 @@ const AuthContext = ({ children }) => {
         }
     }
     const updateUser = async (updateInfo, id, navigate) => {
-        // updateInfo = {
-        //     "username": "string",
-        //     "email": "user@example.com",
-        //     "first_name": "string",
-        //     "last_name": "string",
-        //     "profile_pic": "string",
-        //     "biography": "string"
-        // }
+        const config = {
+            method: 'put',
+            url: `${url}auth/update-profile/${id}`,
+            headers: {
+                'Authorization': `Token ${myToken}`,
+                'Content-Type': 'application/json',
+                'Cookie': 'csrftoken=hg8jtk9cKr6iaVG9AY6j7ynqx0s18Ulx; sessionid=crcnox2a76sf9d54b1bga52ksj7yxpwt'
+            },
+            data: updateInfo
+        };
         try {
-            const res = await axios.patch(`${url}auth/update-profile/${id}`, updateInfo)
+            const res = await axios(config)
             setCurrentUser(res.data)
             sessionStorage.setItem("currentUser", JSON.stringify(res.data))
             toastSuccessNotify('Profile Updated successfully')
