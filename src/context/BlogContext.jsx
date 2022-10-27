@@ -5,7 +5,7 @@ import { toastErrorNotify, toastSuccessNotify } from '../helper/helper';
 
 
 export const BlogDataContext = createContext()
-const mainUrl = 'https://fatihg.pythonanywhere.com/';
+// const url = 'https://fatihg.pythonanywhere.com/';
 const url = "http://127.0.0.1:8000/";
 
 const BlogContext = ({ children }) => {
