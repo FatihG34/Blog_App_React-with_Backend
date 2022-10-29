@@ -12,7 +12,7 @@ const BlogForm = ({ handleChange, handleSubmit, posts, buttonInnerText }) => {
         )
     }
     return (
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmit(e)} >
             <Stack spacing={3} direction='column' >
                 <TextField
                     label='Title'

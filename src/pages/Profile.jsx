@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContextProv } from '../context/AuthContext';
 import UpgradeIcon from '@mui/icons-material/Upgrade';
+import VerticalAlignBottomIcon from '@mui/icons-material/VerticalAlignBottom';
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import AlternateEmailSharpIcon from '@mui/icons-material/AlternateEmailSharp';
 import LinkTwoToneIcon from '@mui/icons-material/LinkTwoTone';
@@ -48,11 +49,11 @@ const Profile = () => {
                     />
                 </Box>
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignContent: 'center', my: '10rem', gap: '2rem', height: 600 }}>
-                <Box>
-                    <Typography component="span" variant="p" sx={{ mx: 2 }}>For Update Your User Information , Click Here</Typography>
-                    <Button variant="contained" color="success" size="medium" startIcon={<UpgradeIcon />} onClick={() => setShowForm(true)}>Open Form</Button>
-                </Box>
+            <Box sx={{ marginY: 5 }}>
+                <Typography component="span" variant="p" sx={{ marginRight: 4 }}>For Update Your User Information , Click Here</Typography>
+                <Button variant="contained" color="success" size="medium" startIcon={showForm ? <UpgradeIcon /> : <VerticalAlignBottomIcon />} onClick={() => setShowForm(!showForm)}>{showForm ? 'Close Form' : 'Open Form'}</Button>
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignContent: 'center', marginTop: '5rem', gap: '2rem', height: 600 }}>
                 {
                     showForm
                     &&

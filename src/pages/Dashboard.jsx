@@ -3,6 +3,7 @@ import BlogCard from '../components/blogcard/BlogCard';
 import Loading from '../assets/loading.gif'
 import { useContext, useEffect, useState } from 'react';
 import { BlogDataContext } from '../context/BlogContext';
+import { blueGrey } from '@mui/material/colors'
 
 const Dashboard = () => {
     const { blogPosts, getBlogPosts, setPage, page } = useContext(BlogDataContext)
@@ -20,7 +21,7 @@ const Dashboard = () => {
 
     if (isLoading) {
         return (
-            <div style={{ backgroundColor: 'black', height: '93.35vh', display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
+            <div style={{ backgroundColor: 'black', height: '100vh', display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
                 <img src={Loading} alt="Loading..." width={'800'} />
             </div>
         )
@@ -28,7 +29,7 @@ const Dashboard = () => {
     // console.log(blogPosts)
 
     return (
-        <Box sx={{ textAlign: 'center', fontFamily: 'Girassol, cursive', display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center' }} >
+        <Box sx={{ textAlign: 'center', fontFamily: 'Girassol, cursive', display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center', backgroundColor: blueGrey['A200'], height: '100vh' }} >
             <Typography variant='h3' sx={{ fontFamily: 'Girassol, cursive' }} >-Dashboard-</Typography>
 
             <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 4, mt: 4, textAlign: 'left' }}>
