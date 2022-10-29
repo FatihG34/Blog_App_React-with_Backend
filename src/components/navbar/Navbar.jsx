@@ -47,7 +47,7 @@ const Navbar = () => {
     };
 
     return (
-        <AppBar position="static" color='success'>
+        <AppBar position="fixed" color='warning'>
             <Container maxWidth="xxl">
                 <Toolbar disableGutters>
                     <img src={Eagle} alt="Eagle" width={30} sx={{ display: { xs: 'none', md: 'flex' }, marginRight: 5 }} />
