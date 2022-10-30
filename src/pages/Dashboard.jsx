@@ -29,16 +29,16 @@ const Dashboard = () => {
     // console.log(blogPosts)
 
     return (
-        <Box sx={{ textAlign: 'center', fontFamily: 'Girassol, cursive', display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center', height: '100vh', mt: 40, mb: 20 }} >
-            <Typography variant='h3' sx={{ fontFamily: 'Girassol, cursive' }} >-Dashboard-</Typography>
+        <Box sx={{ textAlign: 'center', fontFamily: 'Girassol, cursive', display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center', height: '100vh', mt: { md: 40, xl: 40 }, mb: 20 }} >
+            <Typography variant='h3' sx={{ fontFamily: 'Girassol, cursive', marginY: '1rem' }} >-Dashboard-</Typography>
 
-            <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 4, mt: 4, textAlign: 'left' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 2 }}>
                 {blogPosts?.map((post, index) => (
                     <BlogCard blogData={post} key={index} />
                 ))}
                 {/* burda gelen data ekrana işleniyor */}
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '60%', mx: 'auto', marginBottom: 10 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '60%', margin: '2rem auto' }}>
                 <Button onClick={() => setPage(page > 6 ? (page - 6) : (page))} variant="contained" color="secondary" startIcon={null}>View Less</Button>
                 <Button onClick={() => setPage(page + 6)} variant="contained" color="warning" startIcon={null}>View More</Button>
             </Box>

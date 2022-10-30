@@ -28,11 +28,11 @@ export default function BlogCard({ blogData }) {
     }
     // console.log(blogData.slug);
     return (
-        <Card sx={{ maxWidth: 500, width: 400, height: 575, position: "relative" }}>
+        <Card sx={{ maxWidth: 500, width: 400, height: 525, position: "relative", textAlign: 'left' }} >
             <div onClick={() => handleClick(blogData.slug)} style={{ cursor: 'pointer' }}>
                 <CardMedia
                     component="img"
-                    height="300"
+                    height="250"
                     image={blogData.image}
                     alt={blogData.title}
                 />
