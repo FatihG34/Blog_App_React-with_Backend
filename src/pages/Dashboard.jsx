@@ -30,12 +30,20 @@ const Dashboard = () => {
 
     return (
         <Box sx={{ textAlign: 'center', fontFamily: 'Girassol, cursive', display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center', height: '100vh', mt: { md: 40, xl: 40 }, mb: 20 }} >
-            <Typography variant='h3' sx={{ fontFamily: 'Girassol, cursive', marginY: '1rem' }} >-Dashboard-</Typography>
+            {/* <Typography variant='h3' sx={{ fontFamily: 'Girassol, cursive', marginY: '1rem' }} >-Dashboard-</Typography> */}
 
             <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 2 }}>
-                {blogPosts?.map((post, index) => (
-                    <BlogCard blogData={post} key={index} />
-                ))}
+                {
+                    blogPosts.length < 1 ?
+                        (
+                            <Typography variant='h5'>There are no posts to display</Typography>
+                        )
+                        :
+                        (blogPosts?.map((post, index) => (
+                            <BlogCard blogData={post} key={index} />
+                        ))
+                        )
+                }
                 {/* burda gelen data ekrana işleniyor */}
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '60%', margin: '2rem auto' }}>
