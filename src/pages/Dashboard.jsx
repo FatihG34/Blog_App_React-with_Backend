@@ -29,7 +29,7 @@ const Dashboard = () => {
     // console.log(blogPosts)
 
     return (
-        <Box sx={{ textAlign: 'center', fontFamily: 'Girassol, cursive', display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center', backgroundColor: blueGrey['A200'], height: '100vh' }} >
+        <Box sx={{ textAlign: 'center', fontFamily: 'Girassol, cursive', display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center', height: '100vh', mt: 40, mb: 20 }} >
             <Typography variant='h3' sx={{ fontFamily: 'Girassol, cursive' }} >-Dashboard-</Typography>
 
             <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 4, mt: 4, textAlign: 'left' }}>
@@ -38,7 +38,7 @@ const Dashboard = () => {
                 ))}
                 {/* burda gelen data ekrana işleniyor */}
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '60%', mx: 'auto', my: 5 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '60%', mx: 'auto', marginBottom: 10 }}>
                 <Button onClick={() => setPage(page > 6 ? (page - 6) : (page))} variant="contained" color="secondary" startIcon={null}>View Less</Button>
                 <Button onClick={() => setPage(page + 6)} variant="contained" color="warning" startIcon={null}>View More</Button>
             </Box>

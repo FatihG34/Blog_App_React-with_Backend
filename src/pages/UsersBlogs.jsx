@@ -12,7 +12,7 @@ const UsersBlogs = () => {
     }, [])
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 4, mt: 10, padding: 2, textAlign: 'left', height: '100vh' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 4, marginY: 10, padding: 2, textAlign: 'left', height: '100vh' }}>
             {userPosts?.map((post, index) => (
                 <BlogCard blogData={post} key={index} />
             ))}

@@ -11,7 +11,7 @@ const About = () => {
       backgroundImage: 'url("https://w0.peakpx.com/wallpaper/377/934/HD-wallpaper-abstract-3d-room-3d-abstract-box-room-square.jpg")', backgroundRepeat: "no-repeat",
       backgroundPosition: 'center',
       backgroundSize: 'cover',
-      marginTop: '4rem',
+      marginTop: '3.5rem',
       padding: '1rem'
     }} >
       <Box sx={{

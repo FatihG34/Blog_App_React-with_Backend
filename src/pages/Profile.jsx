@@ -29,7 +29,7 @@ const Profile = () => {
         setShowForm(false)
     }
     return (
-        <Box sx={{ width: { xs: "80%", sm: "70%", md: "60%" }, mx: 'auto', my: '1rem' }}>
+        <Box sx={{ width: { xs: "80%", sm: "70%", md: "60%" }, mx: 'auto', my: '6rem' }}>
             <Box sx={{
                 display: 'flex', flexDirection: { xs: "column-reverse", sm: 'column-reverse', md: 'row' }, justifyContent: { xs: 'center', md: 'space-evenly' }, alignContent: 'center', gap: 5, backgroundColor: 'bisque'
             }}>

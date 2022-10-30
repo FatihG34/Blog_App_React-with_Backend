@@ -5,8 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* font-family: 'Noto Serif', serif; */
+  font-family: 'Noto Serif', serif;
   /* font-family: 'PT Serif', serif; */
+  background-color:#F4F4F4;
 }
 
 code {

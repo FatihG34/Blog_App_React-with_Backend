@@ -35,9 +35,9 @@ const UpdateBlog = () => {
             direction="column"
             alignItems="center"
             justify="center"
-            style={{ maxHeight: '100vh', marginTop: '10px' }}
+            style={{ maxHeight: '100vh', margin: '16px' }}
         >
-            <Grid item width={'30%'}>
+            <Grid item width={'45%'}>
                 <BlogForm handleChange={handleChange} handleSubmit={handleSubmit} posts={updateBlog} buttonInnerText={submitButtonInnerContent} />
             </Grid>
         </Grid>
