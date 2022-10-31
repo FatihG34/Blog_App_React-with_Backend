@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Footer from '../components/footer/Footer';
 import Navbar from '../components/navbar/Navbar';
 import About from '../pages/About';
 import BlogDetails from '../pages/BlogDetails';
@@ -38,6 +39,7 @@ const AppRouter = () => {
                     <Route path='' element={<Profile />} />
                 </Route>
             </Routes>
+            <Footer />
         </BrowserRouter>
     )
 }
