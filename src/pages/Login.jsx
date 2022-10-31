@@ -14,7 +14,7 @@ const Login = () => {
     const navigate = useNavigate()
     const { signIn } = useContext(AuthContextProv)
     return (
-        <Grid container width={'100%'} height={'100vh'} sx={{ marginTop: 8 }}>
+        <Grid container width={'100%'} height={'100vh'} >
             <Grid item xs={0} md={8} style={{ background: "url('https://picsum.photos/800/1200') no-repeat center", backgroundSize: "100%" }}>
             </Grid>
             <Grid item xs={12} md={4} sx={{ backgroundColor: 'whitesmoke', padding: '2rem' }}>

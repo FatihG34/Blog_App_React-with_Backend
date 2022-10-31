@@ -28,15 +28,15 @@ export default function BlogCard({ blogData }) {
     }
     // console.log(blogData.slug);
     return (
-        <Card sx={{ maxWidth: 500, width: 400, height: 525, position: "relative", textAlign: 'left' }} >
+        <Card sx={{ maxWidth: 345, height: 450, position: "relative", textAlign: 'left' }} >
             <div onClick={() => handleClick(blogData.slug)} style={{ cursor: 'pointer' }}>
                 <CardMedia
                     component="img"
-                    height="250"
+                    height="200"
                     image={blogData.image}
                     alt={blogData.title}
                 />
-                <CardContent sx={{ bgcolor: '#81abc2', height: 120 }}>
+                <CardContent sx={{ bgcolor: '#81abc296', height: 100 }}>
                     <Typography variant='h6'>{blogData.title}</Typography>
                     <Typography
                         variant="body2"
@@ -55,14 +55,14 @@ export default function BlogCard({ blogData }) {
             </div>
             <CardHeader
                 avatar={
-                    <Avatar sx={{ bgcolor: green[500] }} aria-label="blog">
+                    <Avatar sx={{ bgcolor: green[400] }} aria-label="blog">
                         {((blogData.author).slice(0, 1)).toUpperCase()}
                     </Avatar>
                 }
                 title={blogData.author.toUpperCase()}
                 subheader={(new Date(blogData.published_date).toUTCString()).slice(0, 16)}
             />
-            <CardActions disableSpacing sx={{ position: "absolute", bottom: "5px", left: "5px" }}>
+            <CardActions disableSpacing sx={{ position: "absolute", bottom: "2px", left: "5px" }}>
                 <IconButton aria-label="like" sx={{ color: (blogData.post_like?.filter((like) => like.user_id === currentUser.id)[0]?.user_id) && "red" }}>
                     <FavoriteIcon />
                     <Typography sx={{ ml: 1 }} >
