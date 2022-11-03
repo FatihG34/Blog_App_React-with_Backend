@@ -34,8 +34,8 @@ const Dashboard = () => {
                 {/* burda gelen data ekrana işleniyor */}
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '60%', margin: '2rem auto' }}>
-                <Button onClick={() => setPage(page > 6 ? (page - 6) : (page))} variant="contained" color="secondary" startIcon={null}>View Less</Button>
-                <Button onClick={() => setPage(page + 6)} variant="contained" color="warning" startIcon={null}>View More</Button>
+                <Button onClick={() => setPage(page > 6 ? (page - 6) : (page))} variant="outlined" color="secondary" startIcon={null}>View Less</Button>
+                <Button onClick={() => setPage(page + 6)} variant="outlined" color="warning" startIcon={null}>View More</Button>
             </Box>
         </>
     );

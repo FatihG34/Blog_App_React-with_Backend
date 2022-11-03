@@ -111,7 +111,7 @@ const BlogContext = ({ children }) => {
             const res = await axios(config)
             if (res.status === 204) {
                 toastSuccessNotify('Deleted Successfuly')
-                navigate('/')
+                navigate(-1)
             }
         } catch (error) {
             toastErrorNotify(error.message)

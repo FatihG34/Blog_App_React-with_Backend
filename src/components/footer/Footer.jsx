@@ -88,7 +88,7 @@ const Footer = () => {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" color='success'>
+            <AppBar position="static" color='warning'>
                 <Toolbar>
                     <Typography
                         variant="h6"
@@ -96,7 +96,7 @@ const Footer = () => {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
-                        © 2022 Made by Fatih Günaydın
+                        © 2022 Fatih Günaydın, All rights reserved.
                     </Typography>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
