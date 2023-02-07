@@ -1,14 +1,14 @@
 import { Box, CardMedia, Typography } from '@mui/material'
 import React, { useContext } from 'react'
 import { AuthContextProv } from '../context/AuthContext'
-import FG from "../assets/newFG.jpg"
+import FG from "../assets/kartal_transparent.png"
 
 const About = () => {
   // const { currentUser } = useContext(AuthContextProv)
   return (
     <Box sx={{
       height: '100vh',
-      backgroundImage: 'url("https://w0.peakpx.com/wallpaper/377/934/HD-wallpaper-abstract-3d-room-3d-abstract-box-room-square.jpg")', backgroundRepeat: "no-repeat",
+      backgroundImage: 'url("https://www.mayerbrown.com/-/media/images/image-banks/thought-leadership/abstract/blue-points-and-lines.jpg")', backgroundRepeat: "no-repeat",
       backgroundPosition: 'center',
       backgroundSize: 'cover',
       padding: '1rem'
@@ -23,12 +23,17 @@ const About = () => {
         <Box sx={{ display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center', gap: 3 }}>
           <CardMedia
             component="img"
-            alt="green iguana"
+            alt="Fatih"
             height="240"
             image={FG}
             sx={{ borderRadius: '50%', maxWidth: { xs: "200px", sm: "250px", md: "250px" } }}
           />
         </Box>
+      </Box>
+      <Box>
+        <Typography>
+          I interested in writing codes, skilled at developing complex solutions, creating responsive designs, possessing strong creative thinking skills, high energy and integrity. Ability to create algorithms effectively, and interact positively and communicate appropriately with team members, leading with team where it necessary. Quickly grasp new technologies and concepts to develop innovative and creative solutions to problems. Every time eager to learn various technologies, tools and libraries. Especially interested in the Front end/Web Development, HTML, CSS, JS, React. Excited to learn new things and improve, lifetime student.
+        </Typography>
       </Box>
     </Box>
   )

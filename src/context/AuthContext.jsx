@@ -2,8 +2,9 @@ import axios from 'axios';
 import React, { createContext, useState } from 'react'
 import { toastErrorNotify, toastSuccessNotify } from '../helper/helper';
 
-const url = 'https://fatihg.pythonanywhere.com/';
+// const url = 'https://fatihg.pythonanywhere.com/';
 // const url = 'http://127.0.0.1:8000/';
+const url = 'http://localhost:8000/';
 
 export const AuthContextProv = createContext();
 
